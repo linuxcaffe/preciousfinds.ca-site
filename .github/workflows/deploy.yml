@@ -31,6 +31,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: linuxcaffe/preciousfinds.ca
+          ref: preciousfinds.ca
           path: content
           fetch-depth: 0
 
