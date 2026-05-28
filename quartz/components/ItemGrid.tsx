@@ -1,6 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { QuartzPluginData } from "../plugins/vfile"
-import { resolveRelative } from "../util/path"
+import { resolveRelative, pathToRoot, joinSegments } from "../util/path"
 import { classNames } from "../util/lang"
 // @ts-ignore
 import style from "./styles/itemGrid.scss"
@@ -38,12 +38,13 @@ export default ((opts: Options) => {
           const status = (fm["status"] as string) ?? "available"
           const image = fm["image"] as string | undefined
           const href = resolveRelative(fileData.slug!, item.slug!)
+          const imgSrc = image ? joinSegments(pathToRoot(fileData.slug!), image) : null
 
           return (
             <a href={href} class={`item-card item-card--${status}`}>
               <div class="item-card-img">
-                {image
-                  ? <img src={`/${image}`} alt={title} loading="lazy" />
+                {imgSrc
+                  ? <img src={imgSrc} alt={title} loading="lazy" />
                   : <div class="item-card-img-placeholder" />
                 }
                 <span class={`item-card-badge item-status--${status}`}>
