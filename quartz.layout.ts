@@ -22,6 +22,14 @@ export const defaultContentPageLayout: PageLayout = {
     Component.ItemMeta(),
     Component.ContentMeta(),
     Component.TagList(),
+    Component.ConditionalRender({
+      component: Component.ItemGrid({ tag: "shop" }),
+      condition: (page) => page.fileData.slug === "shop",
+    }),
+    Component.ConditionalRender({
+      component: Component.ItemGrid({ tag: "new" }),
+      condition: (page) => page.fileData.slug === "new-arrivals",
+    }),
   ],
   left: [
     Component.PageTitle(),
