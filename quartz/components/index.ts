@@ -25,6 +25,7 @@ import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
 import ItemMeta from "./ItemMeta"
 import ItemGrid from "./ItemGrid"
+import FeaturedItem from "./FeaturedItem"
 
 export {
   ArticleTitle,
@@ -54,4 +55,5 @@ export {
   ConditionalRender,
   ItemMeta,
   ItemGrid,
+  FeaturedItem,
 }

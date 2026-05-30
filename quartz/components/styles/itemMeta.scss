@@ -68,3 +68,20 @@
   color: var(--gray);
   margin-left: auto;
 }
+
+.item-category {
+  color: var(--gray);
+  font-size: 0.85rem;
+
+  &::before {
+    content: "# ";
+    opacity: 0.5;
+  }
+}
+
+.item-caption {
+  font-style: italic;
+  color: var(--gray);
+  font-size: 0.95rem;
+  margin: -1rem 0 1.5rem;
+}

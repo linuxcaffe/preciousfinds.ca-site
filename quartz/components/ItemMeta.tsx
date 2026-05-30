@@ -9,11 +9,13 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
   const fm        = fileData.frontmatter ?? {}
   const status    = fm["status"]    as string | undefined
   const price     = fm["price"]     as string | undefined
+  const category  = fm["category"]  as string | undefined
+  const caption   = fm["caption"]   as string | undefined
   const platform  = fm["platform"]  as string | undefined
   const listing   = fm["listing"]   as string | undefined
   const condition = fm["condition"] as string | undefined
 
-  if (!status && !price && !platform && !condition) return null
+  if (!status && !price && !platform && !condition && !caption) return null
 
   const statusLabel =
     status === "available" ? "Available"
@@ -21,20 +23,24 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
     : status               ?? ""
 
   return (
-    <div class={classNames(displayClass, "item-meta")}>
-      {status && (
-        <span class={`item-status item-status--${status}`}>{statusLabel}</span>
-      )}
-      {price && <span class="item-price">{String(price)}</span>}
-      {condition && <span class="item-condition">{String(condition)}</span>}
-      {platform && listing
-        ? <a class="item-listing" href={String(listing)} target="_blank" rel="noopener noreferrer">
-            View on {String(platform)} →
-          </a>
-        : platform
-        ? <span class="item-platform">{String(platform)}</span>
-        : null
-      }
+    <div class={classNames(displayClass, "item-meta-wrap")}>
+      <div class="item-meta">
+        {status && (
+          <span class={`item-status item-status--${status}`}>{statusLabel}</span>
+        )}
+        {category && <span class="item-category">{String(category)}</span>}
+        {price && <span class="item-price">{String(price)}</span>}
+        {condition && <span class="item-condition">{String(condition)}</span>}
+        {platform && listing
+          ? <a class="item-listing" href={String(listing)} target="_blank" rel="noopener noreferrer">
+              View on {String(platform)} →
+            </a>
+          : platform
+          ? <span class="item-platform">{String(platform)}</span>
+          : null
+        }
+      </div>
+      {caption && <p class="item-caption">{String(caption)}</p>}
     </div>
   )
 }

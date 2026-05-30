@@ -37,8 +37,11 @@ export default ((opts: Options) => {
           const price = fm["price"] as string | undefined
           const status = (fm["status"] as string) ?? "available"
           const image = fm["image"] as string | undefined
-          const href = resolveRelative(fileData.slug!, item.slug!)
-          const imgSrc = image ? joinSegments(pathToRoot(fileData.slug!), image) : null
+          const caption = fm["caption"] as string | undefined
+          const href    = resolveRelative(fileData.slug!, item.slug!)
+          // normalize ../images/ (relative from items/) to images/ then resolve from current page
+          const imgNorm = image ? image.replace(/^\.\.\//, "") : null
+          const imgSrc  = imgNorm ? joinSegments(pathToRoot(fileData.slug!), imgNorm) : null
 
           return (
             <a href={href} class={`item-card item-card--${status}`}>
@@ -53,6 +56,7 @@ export default ((opts: Options) => {
               </div>
               <div class="item-card-body">
                 <div class="item-card-title">{title}</div>
+                {caption && <div class="item-card-caption">{caption}</div>}
                 {price && <div class="item-card-price">{String(price)}</div>}
               </div>
             </a>

@@ -19,6 +19,10 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
+    Component.ConditionalRender({
+      component: Component.FeaturedItem(),
+      condition: (page) => page.fileData.slug === "index",
+    }),
     Component.ItemMeta(),
     Component.ContentMeta(),
     Component.TagList(),
