@@ -29,6 +29,7 @@ import FeaturedItem from "./FeaturedItem"
 import ShopHome from "./ShopHome"
 import ShopHeader from "./ShopHeader"
 import ItemGallery from "./ItemGallery"
+import CategoryContent from "./pages/CategoryContent"
 
 export {
   ArticleTitle,
@@ -62,4 +63,5 @@ export {
   ShopHome,
   ShopHeader,
   ItemGallery,
+  CategoryContent,
 }
