@@ -1,6 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { QuartzPluginData } from "../plugins/vfile"
-import { resolveRelative, pathToRoot, joinSegments } from "../util/path"
+import { resolveRelative, pathToRoot, joinSegments, FullSlug } from "../util/path"
 import { classNames } from "../util/lang"
 // @ts-ignore
 import style from "./styles/shopHome.scss"
@@ -94,9 +94,9 @@ export default (() => {
       <div class={classNames(displayClass, "shop-home")}>
         {/* ── Category nav ─────────────────────────────────── */}
         <nav class="shop-nav">
-          <a href="/new-arrivals">New Arrivals</a>
+          <a href={resolveRelative(fromSlug, "new-arrivals" as FullSlug)}>New Arrivals</a>
           {categories.map((cat) => (
-            <a href={`/category/${cat}`}>{capitalize(cat)}</a>
+            <a href={resolveRelative(fromSlug, `category/${cat}` as FullSlug)}>{capitalize(cat)}</a>
           ))}
         </nav>
 
@@ -183,7 +183,7 @@ export default (() => {
         {byDate.length > 0 && (
           <section class="shop-section" id="new-arrivals">
             <h2 class="shop-section-heading">
-              <a href="/new-arrivals">New Arrivals</a>
+              <a href={resolveRelative(fromSlug, "new-arrivals" as FullSlug)}>New Arrivals</a>
             </h2>
             <Strip items={byDate} />
           </section>
@@ -197,7 +197,7 @@ export default (() => {
           return (
             <section class="shop-section" id={`category-${cat}`}>
               <h2 class="shop-section-heading">
-                <a href={`/category/${cat}`}>{capitalize(cat)}</a>
+                <a href={resolveRelative(fromSlug, `category/${cat}` as FullSlug)}>{capitalize(cat)}</a>
               </h2>
               <Strip items={catItems} />
             </section>
