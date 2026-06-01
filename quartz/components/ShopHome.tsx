@@ -7,8 +7,13 @@ import style from "./styles/shopHome.scss"
 
 function normalizeImage(image: string, fromSlug: string): string | null {
   if (!image) return null
-  const path = image.replace(/^\.\.\//, "")
-  return joinSegments(pathToRoot(fromSlug as any), path)
+  const first = image.split(",")[0].trim()
+  if (!first) return null
+  // Accept: bare "ABC002.jpg", "images/ABC002.jpg", or legacy "../images/ABC002.jpg"
+  const rel = first.startsWith("../images/") ? first.slice(3)
+            : first.startsWith("images/")    ? first
+            : `images/${first}`
+  return joinSegments(pathToRoot(fromSlug as any), rel)
 }
 
 function capitalize(s: string): string {

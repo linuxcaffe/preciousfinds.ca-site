@@ -6,8 +6,12 @@ import style from "./styles/featuredItem.scss"
 
 function normalizeImage(image: string, fromSlug: string): string | null {
   if (!image) return null
-  const path = image.replace(/^\.\.\//, "")
-  return joinSegments(pathToRoot(fromSlug as any), path)
+  const first = image.split(",")[0].trim()
+  if (!first) return null
+  const rel = first.startsWith("../images/") ? first.slice(3)
+            : first.startsWith("images/")    ? first
+            : `images/${first}`
+  return joinSegments(pathToRoot(fromSlug as any), rel)
 }
 
 export default (() => {

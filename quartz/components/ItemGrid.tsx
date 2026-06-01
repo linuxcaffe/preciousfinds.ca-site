@@ -42,9 +42,15 @@ export default ((opts: Options) => {
           const image = fm["image"] as string | undefined
           const caption = fm["caption"] as string | undefined
           const href    = resolveRelative(fileData.slug!, item.slug!)
-          // normalize ../images/ (relative from items/) to images/ then resolve from current page
-          const imgNorm = image ? image.replace(/^\.\.\//, "") : null
-          const imgSrc  = imgNorm ? joinSegments(pathToRoot(fileData.slug!), imgNorm) : null
+          const imgNorm = (() => {
+            if (!image) return null
+            const first = image.split(",")[0].trim()
+            if (!first) return null
+            return first.startsWith("../images/") ? first.slice(3)
+                 : first.startsWith("images/")    ? first
+                 : `images/${first}`
+          })()
+          const imgSrc = imgNorm ? joinSegments(pathToRoot(fileData.slug!), imgNorm) : null
           const badgeLabel = status === "available" ? "Available" : status === "sold" ? "Sold" : status
 
           return (
