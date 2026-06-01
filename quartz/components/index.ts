@@ -27,6 +27,7 @@ import ItemMeta from "./ItemMeta"
 import ItemGrid from "./ItemGrid"
 import FeaturedItem from "./FeaturedItem"
 import ShopHome from "./ShopHome"
+import ShopHeader from "./ShopHeader"
 
 export {
   ArticleTitle,
@@ -58,4 +59,5 @@ export {
   ItemGrid,
   FeaturedItem,
   ShopHome,
+  ShopHeader,
 }

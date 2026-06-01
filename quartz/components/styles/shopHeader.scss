@@ -1,0 +1,64 @@
+// ── Shop site-wide header banner ──────────────────────────────────────────────
+
+.shop-header-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: color-mix(in srgb, var(--dark) 80%, var(--secondary));
+  padding: 0.6rem 1.25rem 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.shop-header-hamburger,
+.shop-header-search {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: 3px;
+  line-height: 1;
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+}
+
+.shop-header-center {
+  flex: 1;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.shop-header-logo {
+  font-family: var(--headerFont);
+  font-style: italic;
+  font-size: 1.75rem;
+  color: #e8c668 !important;
+  text-decoration: none !important;
+  display: inline-block;
+
+  &:hover {
+    color: #f2d882 !important;
+    text-decoration: none !important;
+  }
+}
+
+.shop-header-tld {
+  font-size: 0.95rem;
+  vertical-align: super;
+  opacity: 0.8;
+  margin-left: 1px;
+}
+
+.shop-header-tagline {
+  font-style: italic;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 0.05rem;
+}
