@@ -9,6 +9,7 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
   const fm        = fileData.frontmatter ?? {}
   const status    = fm["status"]    as string | undefined
   const price     = fm["price"]     as string | undefined
+  const qtty      = fm["qtty"]      as string | undefined
   const category  = fm["category"]  as string | undefined
   const caption   = fm["caption"]   as string | undefined
   const platform  = fm["platform"]  as string | undefined
@@ -29,6 +30,7 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
           <span class={`item-status item-status--${status}`}>{statusLabel}</span>
         )}
         {category && <span class="item-category">{String(category)}</span>}
+        {qtty && <span class="item-qtty">×{String(qtty)}</span>}
         {price && <span class="item-price">{String(price)}</span>}
         {condition && <span class="item-condition">{String(condition)}</span>}
         {platform && listing

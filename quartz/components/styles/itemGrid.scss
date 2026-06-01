@@ -53,18 +53,6 @@
     );
   }
 
-  &-badge {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 0.15em 0.5em;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-
   &-body {
     padding: 0.7rem 0.8rem;
     display: flex;
@@ -87,10 +75,35 @@
     line-height: 1.3;
   }
 
+  &-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: auto;
+    padding-top: 0.4rem;
+    flex-wrap: wrap;
+  }
+
+  &-qtty {
+    font-size: 0.78rem;
+    color: var(--gray);
+    font-variant-numeric: tabular-nums;
+  }
+
+  &-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.15em 0.5em;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
   &-price {
     font-weight: 700;
     font-size: 1rem;
     color: var(--secondary);
+    margin-left: auto;
   }
 }
 

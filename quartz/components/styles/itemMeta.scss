@@ -32,6 +32,12 @@
   }
 }
 
+.item-qtty {
+  font-size: 0.85rem;
+  color: var(--gray);
+  font-variant-numeric: tabular-nums;
+}
+
 .item-price {
   font-weight: 700;
   font-size: 1.05rem;

@@ -11,7 +11,9 @@ interface Options {
 }
 
 export default ((opts: Options) => {
-  const ItemGrid: QuartzComponent = ({ allFiles, fileData, displayClass }: QuartzComponentProps) => {
+  const ItemGrid: QuartzComponent = (props: QuartzComponentProps) => {
+    if (!props?.allFiles) return null
+    const { allFiles, fileData, displayClass } = props
     const { tag, limit } = opts
 
     let items: QuartzPluginData[] = allFiles
@@ -35,6 +37,7 @@ export default ((opts: Options) => {
           const fm = item.frontmatter ?? {}
           const title = (fm["title"] as string) ?? item.slug ?? ""
           const price = fm["price"] as string | undefined
+          const qtty  = fm["qtty"]  as string | undefined
           const status = (fm["status"] as string) ?? "available"
           const image = fm["image"] as string | undefined
           const caption = fm["caption"] as string | undefined
@@ -42,6 +45,7 @@ export default ((opts: Options) => {
           // normalize ../images/ (relative from items/) to images/ then resolve from current page
           const imgNorm = image ? image.replace(/^\.\.\//, "") : null
           const imgSrc  = imgNorm ? joinSegments(pathToRoot(fileData.slug!), imgNorm) : null
+          const badgeLabel = status === "available" ? "Available" : status === "sold" ? "Sold" : status
 
           return (
             <a href={href} class={`item-card item-card--${status}`}>
@@ -50,14 +54,15 @@ export default ((opts: Options) => {
                   ? <img src={imgSrc} alt={title} loading="lazy" />
                   : <div class="item-card-img-placeholder" />
                 }
-                <span class={`item-card-badge item-status--${status}`}>
-                  {status === "available" ? "Available" : status === "sold" ? "Sold" : status}
-                </span>
               </div>
               <div class="item-card-body">
                 <div class="item-card-title">{title}</div>
                 {caption && <div class="item-card-caption">{caption}</div>}
-                {price && <div class="item-card-price">{String(price)}</div>}
+                <div class="item-card-footer">
+                  {qtty && <span class="item-card-qtty">×{String(qtty)}</span>}
+                  <span class={`item-card-badge item-status--${status}`}>{badgeLabel}</span>
+                  {price && <span class="item-card-price">{String(price)}</span>}
+                </div>
               </div>
             </a>
           )
