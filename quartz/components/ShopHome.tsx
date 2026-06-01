@@ -115,11 +115,23 @@ export default (() => {
                 const imgSrc = image ? normalizeImage(image, fromSlug) : null
                 const href = resolveRelative(fromSlug, item.slug!)
 
+                const description = fm["description"] as string | undefined
+                const condition   = fm["condition"] as string | undefined
+                const status      = fm["status"] as string | undefined
+                const platform    = fm["platform"] as string | undefined
+                const listing     = fm["listing"] as string | undefined
+
+                const statusLabel =
+                  status === "available" ? "Available"
+                  : status === "sold"    ? "Sold"
+                  : status               ?? ""
+
                 return (
                   <div
                     class={`featured-card${i > 0 ? " featured-card--hidden" : ""}`}
                     data-featured-item="1"
                   >
+                    <a href={href} class="featured-card-title">{title}</a>
                     <a href={href} class="featured-card-img-wrap">
                       {imgSrc ? (
                         <img src={imgSrc} alt={title} loading="eager" />
@@ -136,15 +148,29 @@ export default (() => {
                         ›
                       </button>
                     )}
-                    <div class="featured-card-body">
-                      <a href={href} class="featured-card-title">
-                        {title}
-                      </a>
-                      {caption && <p class="featured-card-caption">{caption}</p>}
-                      <div class="featured-card-footer">
-                        {qtty && <span class="featured-card-qtty">×{String(qtty)}</span>}
-                        {price && <span class="featured-card-price">{String(price)}</span>}
-                      </div>
+                    {caption && (
+                      <a href={href} class="featured-card-caption">{caption}</a>
+                    )}
+                    {description && (
+                      <a href={href} class="featured-card-description">{description}</a>
+                    )}
+                    {condition && <p class="featured-card-condition">{condition}</p>}
+                    <div class="featured-card-footer">
+                      {qtty && <span class="featured-card-qtty">×{String(qtty)}</span>}
+                      {status && (
+                        <span class={`featured-card-badge featured-card-badge--${status}`}>
+                          {statusLabel}
+                        </span>
+                      )}
+                      {price && <span class="featured-card-price">{String(price)}</span>}
+                      {platform && listing
+                        ? <a class="featured-card-platform" href={String(listing)} target="_blank" rel="noopener noreferrer">
+                            View on {String(platform)} →
+                          </a>
+                        : platform
+                        ? <span class="featured-card-platform">{String(platform)}</span>
+                        : null
+                      }
                     </div>
                   </div>
                 )

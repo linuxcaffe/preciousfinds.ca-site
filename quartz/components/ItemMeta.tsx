@@ -6,17 +6,17 @@ import style from "./styles/itemMeta.scss"
 const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
   if (!fileData.slug?.startsWith("items/")) return null
 
-  const fm        = fileData.frontmatter ?? {}
-  const status    = fm["status"]    as string | undefined
-  const price     = fm["price"]     as string | undefined
-  const qtty      = fm["qtty"]      as string | undefined
-  const category  = fm["category"]  as string | undefined
-  const caption   = fm["caption"]   as string | undefined
-  const platform  = fm["platform"]  as string | undefined
-  const listing   = fm["listing"]   as string | undefined
-  const condition = fm["condition"] as string | undefined
+  const fm          = fileData.frontmatter ?? {}
+  const status      = fm["status"]      as string | undefined
+  const price       = fm["price"]       as string | undefined
+  const qtty        = fm["qtty"]        as string | undefined
+  const category    = fm["category"]    as string | undefined
+  const description = fm["description"] as string | undefined
+  const platform    = fm["platform"]    as string | undefined
+  const listing     = fm["listing"]     as string | undefined
+  const condition   = fm["condition"]   as string | undefined
 
-  if (!status && !price && !platform && !condition && !caption) return null
+  if (!status && !price && !platform && !condition && !description && !category) return null
 
   const statusLabel =
     status === "available" ? "Available"
@@ -25,14 +25,15 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
 
   return (
     <div class={classNames(displayClass, "item-meta-wrap")}>
+      {category && <span class="item-category">{String(category)}</span>}
+      {description && <p class="item-description">{String(description)}</p>}
+      {condition && <p class="item-condition">{String(condition)}</p>}
       <div class="item-meta">
+        {qtty && <span class="item-qtty">×{String(qtty)}</span>}
         {status && (
           <span class={`item-status item-status--${status}`}>{statusLabel}</span>
         )}
-        {category && <span class="item-category">{String(category)}</span>}
-        {qtty && <span class="item-qtty">×{String(qtty)}</span>}
         {price && <span class="item-price">{String(price)}</span>}
-        {condition && <span class="item-condition">{String(condition)}</span>}
         {platform && listing
           ? <a class="item-listing" href={String(listing)} target="_blank" rel="noopener noreferrer">
               View on {String(platform)} →
@@ -42,7 +43,6 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
           : null
         }
       </div>
-      {caption && <p class="item-caption">{String(caption)}</p>}
     </div>
   )
 }

@@ -81,6 +81,21 @@
     display: none;
   }
 
+  &-title {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--dark) !important;
+    text-decoration: none !important;
+    margin-bottom: 0.6rem;
+
+    &:hover {
+      color: var(--secondary) !important;
+    }
+  }
+
   &-img-wrap {
     display: block;
 
@@ -101,17 +116,14 @@
     border-radius: 4px;
   }
 
-  &-body {
+  &-caption {
+    display: block;
     width: 100%;
     text-align: center;
-    margin-top: 0.75rem;
-  }
-
-  &-title {
-    display: block;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--dark) !important;
+    font-style: italic;
+    color: var(--gray) !important;
+    font-size: 0.95rem;
+    margin-top: 0.6rem;
     text-decoration: none !important;
 
     &:hover {
@@ -119,17 +131,41 @@
     }
   }
 
-  &-caption {
-    color: var(--gray);
+  &-description {
+    display: block;
+    width: 100%;
+    text-align: center;
+    color: var(--darkgray) !important;
     font-size: 0.9rem;
-    margin: 0.25rem 0 0;
+    margin-top: 0.25rem;
+    text-decoration: none !important;
+
+    &:hover {
+      color: var(--secondary) !important;
+    }
+  }
+
+  &-condition {
+    width: 100%;
+    text-align: center;
+    color: var(--gray);
+    font-size: 0.85rem;
+    margin: 0.2rem 0 0;
+
+    &::before {
+      content: "Condition: ";
+      opacity: 0.7;
+    }
   }
 
   &-footer {
     display: flex;
+    align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.6rem;
+    width: 100%;
   }
 
   &-qtty {
@@ -137,9 +173,41 @@
     font-size: 0.85rem;
   }
 
+  &-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.15em 0.55em;
+    border-radius: 3px;
+
+    &--available {
+      background: color-mix(in srgb, #4a6741 12%, transparent);
+      color: #4a6741;
+      border: 1px solid color-mix(in srgb, #4a6741 28%, transparent);
+    }
+
+    &--sold {
+      background: color-mix(in srgb, var(--gray) 12%, transparent);
+      color: var(--gray);
+      border: 1px solid var(--lightgray);
+    }
+  }
+
   &-price {
     color: var(--secondary);
-    font-weight: 600;
+    font-weight: 700;
+    font-size: 1.05rem;
+  }
+
+  &-platform {
+    margin-left: auto;
+    font-size: 0.8rem;
+    color: var(--secondary) !important;
+    text-decoration: none !important;
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--tertiary) !important;
+    }
   }
 }
 

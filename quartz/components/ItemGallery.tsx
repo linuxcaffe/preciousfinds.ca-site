@@ -21,9 +21,10 @@ export default (() => {
   const ItemGallery: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
     if (!fileData.slug?.startsWith("items/")) return null
 
-    const fm     = fileData.frontmatter ?? {}
-    const title  = (fm["title"] as string) ?? ""
-    const images = resolveImages(fm["image"] as string | undefined, fileData.slug!)
+    const fm      = fileData.frontmatter ?? {}
+    const title   = (fm["title"] as string) ?? ""
+    const caption = fm["caption"] as string | undefined
+    const images  = resolveImages(fm["image"] as string | undefined, fileData.slug!)
 
     if (images.length === 0) return null
 
@@ -43,6 +44,8 @@ export default (() => {
             </button>
           )}
         </div>
+
+        {caption && <p class="item-gallery-caption">{caption}</p>}
 
         {images.length > 1 && (
           <div class="item-gallery-thumbs">
