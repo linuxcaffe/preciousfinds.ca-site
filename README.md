@@ -1,3 +1,28 @@
+# quartz-preciousfinds.ca
+
+> preciousfinds.ca shop site — built on Quartz v4, deployed to GitHub Pages.
+
+## Local setup
+
+Content lives in the nb notebook `~/.nb/preciousfinds.ca/` and is linked into
+this project via a symlink:
+
+```bash
+ln -s ~/.nb/preciousfinds.ca content
+```
+
+**Do not commit the symlink target** — `content/` is `.gitignore`d; the notebook
+has its own git history. Build and deploy with:
+
+```bash
+source ~/.nvm/nvm.sh && nvm use 22
+npx quartz sync          # build + push to GitHub Pages
+```
+
+Or use **Menu → Notebooks → preciousfinds.ca → Build & Deploy** in nb-web.
+
+---
+
 # Quartz v4
 
 > “[One] who works with the door open gets all kinds of interruptions, but [they] also occasionally gets clues as to what the world is and what might be important.” — Richard Hamming
