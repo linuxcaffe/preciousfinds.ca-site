@@ -23,6 +23,7 @@ export const defaultContentPageLayout: PageLayout = {
       component: Component.ShopHome(),
       condition: (page) => page.fileData.slug === "index",
     }),
+    Component.ItemGallery(),
     Component.ItemMeta(),
     Component.ContentMeta(),
     Component.TagList(),
