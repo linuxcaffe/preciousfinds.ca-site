@@ -228,18 +228,40 @@ body[data-slug="index"] {
   }
 }
 
-// ── New Arrivals page ─────────────────────────────────────────────────────────
+// ── Category pages — single-column, nav + breadcrumbs in content ─────────────
 
-body[data-slug="new-arrivals"] {
-  // Month headings (## May 2026) — pull some vertical breathing room
-  .center article h2 {
-    margin-top: 3rem;
-    color: var(--secondary);
+body[data-slug^="category/"] > #quartz-body {
+  grid-template-columns: auto;
+  grid-template-areas:
+    "grid-header"
+    "grid-center"
+    "grid-footer";
+
+  .sidebar.left,
+  .sidebar.right {
+    display: none;
   }
+}
 
-  // Item headings (### Item Name)
-  .center article h3 {
-    margin-bottom: 0.25rem;
+body[data-slug^="category/"] {
+  .content-meta,
+  .breadcrumb-container + .article-title { // hide duplicate title (CategoryContent renders its own)
+    display: none;
+  }
+}
+
+// ── Item pages — single-column ────────────────────────────────────────────────
+
+body[data-slug^="items/"] > #quartz-body {
+  grid-template-columns: auto;
+  grid-template-areas:
+    "grid-header"
+    "grid-center"
+    "grid-footer";
+
+  .sidebar.left,
+  .sidebar.right {
+    display: none;
   }
 }
 

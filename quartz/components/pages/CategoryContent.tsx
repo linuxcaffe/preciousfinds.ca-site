@@ -1,6 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import { QuartzPluginData } from "../../plugins/vfile"
-import { resolveRelative, pathToRoot, joinSegments } from "../../util/path"
+import { resolveRelative, pathToRoot, joinSegments, FullSlug } from "../../util/path"
 // @ts-ignore
 import style from "../styles/categoryContent.scss"
 
@@ -36,9 +36,36 @@ export default (() => {
       })
       .sort((a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0))
 
+    // Build nav category list (same dynamic logic as ShopHome)
+    const navCats: string[] = []
+    ;[...allFiles]
+      .sort((a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0))
+      .forEach((f) => {
+        if (!f.slug?.startsWith("items/")) return
+        const st = f.frontmatter?.status as string | undefined
+        if (st && st !== "available") return
+        const c = f.frontmatter?.category as string | undefined
+        if (c && !navCats.includes(c)) navCats.push(c)
+      })
+
+    function Nav() {
+      return (
+        <nav class="shop-nav">
+          <a href={resolveRelative(fromSlug, "new-arrivals" as FullSlug)}>New Arrivals</a>
+          {navCats.map((c) => (
+            <a
+              href={resolveRelative(fromSlug, `category/${c}` as FullSlug)}
+              class={c === cat ? "shop-nav-active" : ""}
+            >{capitalize(c)}</a>
+          ))}
+        </nav>
+      )
+    }
+
     if (items.length === 0) {
       return (
         <div class="category-content">
+          <Nav />
           <h1 class="category-page-title">{capitalize(cat)}</h1>
           <p class="category-empty">No items in this category yet.</p>
         </div>
@@ -121,6 +148,7 @@ export default (() => {
 
     return (
       <div class="category-content">
+        <Nav />
         <h1 class="category-page-title">{capitalize(cat)}</h1>
         <HeroCard item={hero} />
         {rest.length > 0 && (

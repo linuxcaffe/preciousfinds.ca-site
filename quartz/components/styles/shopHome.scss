@@ -28,6 +28,11 @@
       background: rgba(255, 255, 255, 0.18);
       text-decoration: none !important;
     }
+
+    &.shop-nav-active {
+      background: rgba(255, 255, 255, 0.22);
+      font-weight: 600;
+    }
   }
 }
 

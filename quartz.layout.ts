@@ -5,7 +5,7 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [Component.ShopHeader()],
-  afterBody: [],
+  afterBody: [Component.PageFootnote()],
   footer: Component.Footer({
     links: {},
   }),
@@ -19,6 +19,7 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
+    Component.PageCaption(),
     Component.ConditionalRender({
       component: Component.ShopHome(),
       condition: (page) => page.fileData.slug === "index",

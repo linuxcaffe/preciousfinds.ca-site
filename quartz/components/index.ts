@@ -30,6 +30,8 @@ import ShopHome from "./ShopHome"
 import ShopHeader from "./ShopHeader"
 import ItemGallery from "./ItemGallery"
 import CategoryContent from "./pages/CategoryContent"
+import PageCaption from "./PageCaption"
+import PageFootnote from "./PageFootnote"
 
 export {
   ArticleTitle,
@@ -64,4 +66,6 @@ export {
   ShopHeader,
   ItemGallery,
   CategoryContent,
+  PageCaption,
+  PageFootnote,
 }
