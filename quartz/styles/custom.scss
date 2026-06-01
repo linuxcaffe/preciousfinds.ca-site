@@ -178,64 +178,28 @@ a {
   }
 }
 
-// ── Home page ─────────────────────────────────────────────────────────────────
+// ── Homepage — full-width, ShopHome owns the content ─────────────────────────
 // body[data-slug="index"] is stamped by Quartz on every page
 
 body[data-slug="index"] {
-  .article-title {
-    text-align: center;
-    font-size: 3.4rem;
-    color: var(--secondary);
-    margin-top: 2.5rem;
-    margin-bottom: 0.1em;
+  // Collapse to single-column — no sidebars on the shop homepage
+  #quartz-body {
+    grid-template-columns: auto;
+    grid-template-areas:
+      "grid-header"
+      "grid-center"
+      "grid-footer";
   }
 
-  // Tagline: first paragraph of content (the em line)
-  .center article > p:first-child {
-    text-align: center;
-    color: var(--gray);
-    font-size: 1.1rem;
-    margin-top: 0;
-    margin-bottom: 2rem;
-  }
-
-  // Hide the content-meta (date/read time) on the landing page
-  .content-meta {
+  .sidebar.left,
+  .sidebar.right {
     display: none;
   }
 
-  // "Browse the Shop →" link — make it read as a CTA
-  .center article a:first-of-type {
-    display: inline-block;
-    background: var(--secondary);
-    color: var(--light) !important;
-    padding: 0.5em 1.5em;
-    border-radius: 3px;
-    font-weight: 600;
-    letter-spacing: 0.03em;
-    margin-block: 0.5rem;
-
-    &:hover {
-      background: var(--tertiary);
-      text-decoration: none;
-    }
-  }
-
-  // "## Recently Added" section heading — add a decorative touch
-  .center article h2:first-of-type {
-    text-align: center;
-    border-bottom: none;
-    margin-top: 3rem;
-
-    &::after {
-      content: "";
-      display: block;
-      width: 3rem;
-      height: 2px;
-      background: var(--secondary);
-      margin: 0.4rem auto 0;
-      border-radius: 1px;
-    }
+  // ShopHome renders the page; suppress the Quartz article scaffolding
+  .article-title,
+  .content-meta {
+    display: none;
   }
 }
 

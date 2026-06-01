@@ -1,0 +1,220 @@
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import { QuartzPluginData } from "../plugins/vfile"
+import { resolveRelative, pathToRoot, joinSegments } from "../util/path"
+import { classNames } from "../util/lang"
+// @ts-ignore
+import style from "./styles/shopHome.scss"
+
+function normalizeImage(image: string, fromSlug: string): string | null {
+  if (!image) return null
+  const path = image.replace(/^\.\.\//, "")
+  return joinSegments(pathToRoot(fromSlug as any), path)
+}
+
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
+
+export default (() => {
+  const ShopHome: QuartzComponent = ({ allFiles, fileData, displayClass }: QuartzComponentProps) => {
+    if (!allFiles) return null
+    const fromSlug = fileData.slug!
+
+    // Active = available or no status
+    const active = allFiles.filter((f) => {
+      if (!f.slug?.startsWith("items/")) return false
+      const status = f.frontmatter?.status as string | undefined
+      return !status || status === "available"
+    })
+
+    // Newest first
+    const byDate = [...active].sort(
+      (a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0),
+    )
+
+    // Dynamic categories — in order of first appearance (newest item first)
+    const categories: string[] = []
+    byDate.forEach((f) => {
+      const cat = f.frontmatter?.category as string | undefined
+      if (cat && !categories.includes(cat)) categories.push(cat)
+    })
+
+    // Featured items (active + "featured" tag)
+    const featured = active.filter((f) => {
+      const tags = (f.frontmatter?.tags as string[]) ?? []
+      return tags.includes("featured")
+    })
+
+    function StripCard({ item }: { item: QuartzPluginData }) {
+      const fm = item.frontmatter ?? {}
+      const title = (fm["title"] as string) ?? ""
+      const caption = (fm["caption"] as string) ?? title
+      const image = fm["image"] as string | undefined
+      const imgSrc = image ? normalizeImage(image, fromSlug) : null
+      const href = resolveRelative(fromSlug, item.slug!)
+
+      return (
+        <a href={href} class="strip-card">
+          <div class="strip-card-img">
+            {imgSrc ? (
+              <img src={imgSrc} alt={title} loading="lazy" />
+            ) : (
+              <div class="strip-card-img-placeholder" />
+            )}
+          </div>
+          <div class="strip-card-caption">{caption}</div>
+        </a>
+      )
+    }
+
+    function Strip({ items }: { items: QuartzPluginData[] }) {
+      return (
+        <div class="shop-strip-wrap" data-strip-wrap="1">
+          <button class="strip-arrow strip-prev" data-strip-prev="1" aria-label="Previous" hidden>
+            ‹
+          </button>
+          <div class="shop-strip" data-strip="1">
+            {items.map((item) => (
+              <StripCard item={item} />
+            ))}
+          </div>
+          <button class="strip-arrow strip-next" data-strip-next="1" aria-label="Next">
+            ›
+          </button>
+        </div>
+      )
+    }
+
+    return (
+      <div class={classNames(displayClass, "shop-home")}>
+        {/* ── Category nav ─────────────────────────────────── */}
+        <nav class="shop-nav">
+          <a href="/new-arrivals">New Arrivals</a>
+          {categories.map((cat) => (
+            <a href={`/category/${cat}`}>{capitalize(cat)}</a>
+          ))}
+        </nav>
+
+        {/* ── Featured ─────────────────────────────────────── */}
+        {featured.length > 0 && (
+          <section class="shop-featured">
+            <h2 class="shop-section-heading">Featured</h2>
+            <div class="featured-list" data-featured-list="1">
+              {featured.map((item, i) => {
+                const fm = item.frontmatter ?? {}
+                const title = (fm["title"] as string) ?? ""
+                const caption = fm["caption"] as string | undefined
+                const price = fm["price"] as string | undefined
+                const qtty = fm["qtty"] as string | undefined
+                const image = fm["image"] as string | undefined
+                const imgSrc = image ? normalizeImage(image, fromSlug) : null
+                const href = resolveRelative(fromSlug, item.slug!)
+
+                return (
+                  <div
+                    class={`featured-card${i > 0 ? " featured-card--hidden" : ""}`}
+                    data-featured-item="1"
+                  >
+                    <a href={href} class="featured-card-img-wrap">
+                      {imgSrc ? (
+                        <img src={imgSrc} alt={title} loading="eager" />
+                      ) : (
+                        <div class="featured-card-img-placeholder" />
+                      )}
+                    </a>
+                    {featured.length > 1 && (
+                      <button
+                        class="featured-next"
+                        data-featured-next="1"
+                        aria-label="Next featured item"
+                      >
+                        ›
+                      </button>
+                    )}
+                    <div class="featured-card-body">
+                      <a href={href} class="featured-card-title">
+                        {title}
+                      </a>
+                      {caption && <p class="featured-card-caption">{caption}</p>}
+                      <div class="featured-card-footer">
+                        {qtty && <span class="featured-card-qtty">×{String(qtty)}</span>}
+                        {price && <span class="featured-card-price">{String(price)}</span>}
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </section>
+        )}
+
+        {/* ── New Arrivals ──────────────────────────────────── */}
+        {byDate.length > 0 && (
+          <section class="shop-section" id="new-arrivals">
+            <h2 class="shop-section-heading">
+              <a href="/new-arrivals">New Arrivals</a>
+            </h2>
+            <Strip items={byDate} />
+          </section>
+        )}
+
+        {/* ── Category sections ────────────────────────────── */}
+        {categories.map((cat) => {
+          const catItems = byDate.filter(
+            (f) => (f.frontmatter?.category as string) === cat,
+          )
+          return (
+            <section class="shop-section" id={`category-${cat}`}>
+              <h2 class="shop-section-heading">
+                <a href={`/category/${cat}`}>{capitalize(cat)}</a>
+              </h2>
+              <Strip items={catItems} />
+            </section>
+          )
+        })}
+      </div>
+    )
+  }
+
+  ShopHome.css = style
+
+  ShopHome.afterDOMLoaded = `
+    // Scroll strips
+    document.querySelectorAll('[data-strip-wrap]').forEach(wrap => {
+      const strip = wrap.querySelector('[data-strip]')
+      const btnL = wrap.querySelector('[data-strip-prev]')
+      const btnR = wrap.querySelector('[data-strip-next]')
+      if (!strip) return
+
+      function updateArrows() {
+        const atStart = strip.scrollLeft < 2
+        const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 2
+        if (btnL) btnL.hidden = atStart
+        if (btnR) btnR.hidden = atEnd
+      }
+
+      strip.addEventListener('scroll', updateArrows, { passive: true })
+      updateArrows()
+
+      const scrollAmt = () => strip.clientWidth * 0.8
+      btnL?.addEventListener('click', () => strip.scrollBy({ left: -scrollAmt(), behavior: 'smooth' }))
+      btnR?.addEventListener('click', () => strip.scrollBy({ left:  scrollAmt(), behavior: 'smooth' }))
+    })
+
+    // Featured cycling
+    const featList = document.querySelector('[data-featured-list]')
+    if (featList) {
+      const items = Array.from(featList.querySelectorAll('[data-featured-item]'))
+      let idx = 0
+      featList.querySelectorAll('[data-featured-next]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          items[idx].classList.add('featured-card--hidden')
+          idx = (idx + 1) % items.length
+          items[idx].classList.remove('featured-card--hidden')
+        })
+      })
+    }
+  `
+
+  return ShopHome
+}) satisfies QuartzComponentConstructor

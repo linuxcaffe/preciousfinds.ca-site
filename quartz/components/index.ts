@@ -26,6 +26,7 @@ import ConditionalRender from "./ConditionalRender"
 import ItemMeta from "./ItemMeta"
 import ItemGrid from "./ItemGrid"
 import FeaturedItem from "./FeaturedItem"
+import ShopHome from "./ShopHome"
 
 export {
   ArticleTitle,
@@ -56,4 +57,5 @@ export {
   ItemMeta,
   ItemGrid,
   FeaturedItem,
+  ShopHome,
 }

@@ -20,7 +20,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.ArticleTitle(),
     Component.ConditionalRender({
-      component: Component.FeaturedItem(),
+      component: Component.ShopHome(),
       condition: (page) => page.fileData.slug === "index",
     }),
     Component.ItemMeta(),
