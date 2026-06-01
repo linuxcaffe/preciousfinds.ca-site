@@ -184,41 +184,50 @@ export default (() => {
   ShopHome.css = style
 
   ShopHome.afterDOMLoaded = `
-    // Scroll strips
-    document.querySelectorAll('[data-strip-wrap]').forEach(wrap => {
-      const strip = wrap.querySelector('[data-strip]')
-      const btnL = wrap.querySelector('[data-strip-prev]')
-      const btnR = wrap.querySelector('[data-strip-next]')
-      if (!strip) return
+    function initShopHome() {
+      // Scroll strips
+      document.querySelectorAll('[data-strip-wrap]').forEach(wrap => {
+        if (wrap.dataset.stripInit) return
+        wrap.dataset.stripInit = '1'
 
-      function updateArrows() {
-        const atStart = strip.scrollLeft < 2
-        const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 2
-        if (btnL) btnL.hidden = atStart
-        if (btnR) btnR.hidden = atEnd
-      }
+        const strip = wrap.querySelector('[data-strip]')
+        const btnL = wrap.querySelector('[data-strip-prev]')
+        const btnR = wrap.querySelector('[data-strip-next]')
+        if (!strip) return
 
-      strip.addEventListener('scroll', updateArrows, { passive: true })
-      updateArrows()
+        function updateArrows() {
+          const atStart = strip.scrollLeft < 2
+          const atEnd = strip.scrollLeft + strip.clientWidth >= strip.scrollWidth - 2
+          if (btnL) btnL.hidden = atStart
+          if (btnR) btnR.hidden = atEnd
+        }
 
-      const scrollAmt = () => strip.clientWidth * 0.8
-      btnL?.addEventListener('click', () => strip.scrollBy({ left: -scrollAmt(), behavior: 'smooth' }))
-      btnR?.addEventListener('click', () => strip.scrollBy({ left:  scrollAmt(), behavior: 'smooth' }))
-    })
+        strip.addEventListener('scroll', updateArrows, { passive: true })
+        updateArrows()
 
-    // Featured cycling
-    const featList = document.querySelector('[data-featured-list]')
-    if (featList) {
-      const items = Array.from(featList.querySelectorAll('[data-featured-item]'))
-      let idx = 0
-      featList.querySelectorAll('[data-featured-next]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          items[idx].classList.add('featured-card--hidden')
-          idx = (idx + 1) % items.length
-          items[idx].classList.remove('featured-card--hidden')
-        })
+        const scrollAmt = () => strip.clientWidth * 0.8
+        btnL?.addEventListener('click', () => strip.scrollBy({ left: -scrollAmt(), behavior: 'smooth' }))
+        btnR?.addEventListener('click', () => strip.scrollBy({ left:  scrollAmt(), behavior: 'smooth' }))
       })
+
+      // Featured cycling
+      const featList = document.querySelector('[data-featured-list]')
+      if (featList && !featList.dataset.featuredInit) {
+        featList.dataset.featuredInit = '1'
+        const items = Array.from(featList.querySelectorAll('[data-featured-item]'))
+        let idx = 0
+        featList.querySelectorAll('[data-featured-next]').forEach(btn => {
+          btn.addEventListener('click', () => {
+            items[idx].classList.add('featured-card--hidden')
+            idx = (idx + 1) % items.length
+            items[idx].classList.remove('featured-card--hidden')
+          })
+        })
+      }
     }
+
+    document.addEventListener('nav', initShopHome)
+    initShopHome()
   `
 
   return ShopHome

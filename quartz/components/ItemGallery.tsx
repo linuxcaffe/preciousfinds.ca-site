@@ -64,25 +64,33 @@ export default (() => {
   ItemGallery.css = style
 
   ItemGallery.afterDOMLoaded = `
-    document.querySelectorAll('[data-gallery-wrap]').forEach(wrap => {
-      const heroImg = wrap.querySelector('[data-gallery-hero]')
-      const nextBtn = wrap.querySelector('[data-gallery-next]')
-      const gallery = wrap.closest('.item-gallery')
-      const thumbs  = gallery ? [...gallery.querySelectorAll('[data-gallery-thumb]')] : []
-      if (!heroImg || !thumbs.length) return
+    function initGalleries() {
+      document.querySelectorAll('[data-gallery-wrap]').forEach(wrap => {
+        if (wrap.dataset.galleryInit) return
+        wrap.dataset.galleryInit = '1'
 
-      let idx = 0
+        const heroImg = wrap.querySelector('[data-gallery-hero]')
+        const nextBtn = wrap.querySelector('[data-gallery-next]')
+        const gallery = wrap.closest('.item-gallery')
+        const thumbs  = gallery ? [...gallery.querySelectorAll('[data-gallery-thumb]')] : []
+        if (!heroImg || !thumbs.length) return
 
-      function show(i) {
-        idx = i
-        const src = thumbs[i].querySelector('img')?.src
-        if (src) heroImg.src = src
-        thumbs.forEach((t, j) => t.classList.toggle('item-gallery-thumb--active', j === i))
-      }
+        let idx = 0
 
-      thumbs.forEach((t, i) => t.addEventListener('click', () => show(i)))
-      nextBtn?.addEventListener('click', () => show((idx + 1) % thumbs.length))
-    })
+        function show(i) {
+          idx = i
+          const src = thumbs[i].querySelector('img')?.src
+          if (src) heroImg.src = src
+          thumbs.forEach((t, j) => t.classList.toggle('item-gallery-thumb--active', j === i))
+        }
+
+        thumbs.forEach((t, i) => t.addEventListener('click', () => show(i)))
+        nextBtn?.addEventListener('click', () => show((idx + 1) % thumbs.length))
+      })
+    }
+
+    document.addEventListener('nav', initGalleries)
+    initGalleries()
   `
 
   return ItemGallery
