@@ -15,11 +15,14 @@ ln -s ~/.nb/preciousfinds.ca content
 has its own git history. Build and deploy with:
 
 ```bash
-source ~/.nvm/nvm.sh && nvm use 22
-npx quartz sync          # build + push to GitHub Pages
+# Push notebook content (triggers GitHub Actions build):
+git -C ~/.nb/preciousfinds.ca push origin HEAD:preciousfinds.ca
+git push origin main     # push quartz config changes if any
 ```
 
-Or use **Menu → Notebooks → preciousfinds.ca → Build & Deploy** in nb-web.
+Or use **Menu → Notebooks → preciousfinds.ca → Build & Deploy** in nb-web,
+which pushes both the notebook content and quartz config to GitHub — GitHub
+Actions handles the actual build and Pages deployment automatically.
 
 ---
 
