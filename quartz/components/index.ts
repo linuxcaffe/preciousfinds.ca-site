@@ -28,6 +28,7 @@ import ItemGrid from "./ItemGrid"
 import FeaturedItem from "./FeaturedItem"
 import ShopHome from "./ShopHome"
 import ShopHeader from "./ShopHeader"
+import ShopFooter from "./ShopFooter"
 import ItemGallery from "./ItemGallery"
 import CategoryContent from "./pages/CategoryContent"
 import PageCaption from "./PageCaption"
@@ -64,6 +65,7 @@ export {
   FeaturedItem,
   ShopHome,
   ShopHeader,
+  ShopFooter,
   ItemGallery,
   CategoryContent,
   PageCaption,

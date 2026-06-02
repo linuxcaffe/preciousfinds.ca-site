@@ -1,12 +1,13 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
+import { siteConfig } from "../util/siteConfig"
 // @ts-ignore
 import style from "./styles/shopHeader.scss"
 
 export default (() => {
   const ShopHeader: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) => {
-    const title   = cfg?.configuration?.pageTitle ?? "Precious Finds"
-    const caption = fileData.frontmatter?.caption
-    const tagline = caption ? String(caption) : null
+    const title      = cfg?.configuration?.pageTitle ?? "Precious Finds"
+    const pageCaption = fileData.frontmatter?.caption
+    const tagline    = pageCaption ? String(pageCaption) : (siteConfig.tagline ?? null)
 
     return (
       <div class="shop-header-wrap">

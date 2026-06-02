@@ -129,22 +129,6 @@ a {
   }
 }
 
-// ── Footer ────────────────────────────────────────────────────────────────────
-
-.page-footer {
-  border-top: 1px solid var(--lightgray);
-
-  p, a {
-    color: var(--gray);
-    font-size: 0.85rem;
-  }
-
-  a:hover {
-    color: var(--secondary);
-    text-decoration: none;
-  }
-}
-
 // ── Single-column layout everywhere; ShopHeader owns search + darkmode ─────────
 // Sidebars are hidden; Search is kept in the DOM (hidden) so ShopHeader's
 // search icon can trigger its modal via .querySelector('.search button').click()
