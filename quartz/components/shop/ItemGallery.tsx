@@ -1,7 +1,7 @@
-import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { pathToRoot, joinSegments } from "../util/path"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
+import { pathToRoot, joinSegments } from "../../util/path"
 // @ts-ignore
-import style from "./styles/itemGallery.scss"
+import style from "../styles/itemGallery.scss"
 
 function resolveImages(imageField: string | undefined, fromSlug: string): string[] {
   if (!imageField) return []

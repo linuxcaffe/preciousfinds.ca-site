@@ -23,16 +23,20 @@ import Breadcrumbs from "./Breadcrumbs"
 import Comments from "./Comments"
 import Flex from "./Flex"
 import ConditionalRender from "./ConditionalRender"
-import ItemMeta from "./ItemMeta"
-import ItemGrid from "./ItemGrid"
-import FeaturedItem from "./FeaturedItem"
-import ShopHome from "./ShopHome"
-import ShopHeader from "./ShopHeader"
-import ShopFooter from "./ShopFooter"
-import ItemGallery from "./ItemGallery"
-import CategoryContent from "./pages/CategoryContent"
 import PageCaption from "./PageCaption"
 import PageFootnote from "./PageFootnote"
+
+// ── nb-website: generic site components ───────────────────────────────────────
+import SiteHeader from "./SiteHeader"
+import SiteFooter from "./SiteFooter"
+
+// ── nb-website: shop extension ────────────────────────────────────────────────
+import ItemMeta from "./shop/ItemMeta"
+import ItemGrid from "./shop/ItemGrid"
+import FeaturedItem from "./shop/FeaturedItem"
+import ShopHome from "./shop/ShopHome"
+import ItemGallery from "./shop/ItemGallery"
+import CategoryContent from "./shop/CategoryContent"
 
 export {
   ArticleTitle,
@@ -60,14 +64,16 @@ export {
   Comments,
   Flex,
   ConditionalRender,
+  PageCaption,
+  PageFootnote,
+  // nb-website generic
+  SiteHeader,
+  SiteFooter,
+  // nb-website shop extension
   ItemMeta,
   ItemGrid,
   FeaturedItem,
   ShopHome,
-  ShopHeader,
-  ShopFooter,
   ItemGallery,
   CategoryContent,
-  PageCaption,
-  PageFootnote,
 }

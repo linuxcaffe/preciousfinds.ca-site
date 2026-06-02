@@ -120,8 +120,8 @@ a {
 
 // ── Search — hidden trigger in afterBody; modal styled below ─────────────────
 
-// The Search component lives in afterBody (invisible) so ShopHeader's icon
-// can trigger its modal via .querySelector('.search button').click()
+// Search lives in afterBody so SiteHeader's icon can trigger its modal
+
 .after-body > .search {
   display: none;
 }
@@ -135,9 +135,9 @@ a {
   }
 }
 
-// ── Single-column layout everywhere; ShopHeader owns search + darkmode ─────────
-// Sidebars are hidden; Search is kept in the DOM (hidden) so ShopHeader's
-// search icon can trigger its modal via .querySelector('.search button').click()
+// ── Single-column layout everywhere; SiteHeader owns search + darkmode ──────────
+
+
 
 body > #quartz-body {
   grid-template-columns: auto;
@@ -152,7 +152,7 @@ body > #quartz-body {
   }
 }
 
-// ShopHeader sits flush at the top — no leading margin
+// SiteHeader sits flush at the top — no leading margin
 .page-header {
   margin-top: 0 !important;
 }

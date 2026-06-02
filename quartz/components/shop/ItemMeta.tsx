@@ -1,7 +1,7 @@
-import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { classNames } from "../util/lang"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
+import { classNames } from "../../util/lang"
 // @ts-ignore
-import style from "./styles/itemMeta.scss"
+import style from "../styles/itemMeta.scss"
 
 const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentProps) => {
   if (!fileData.slug?.startsWith("items/")) return null

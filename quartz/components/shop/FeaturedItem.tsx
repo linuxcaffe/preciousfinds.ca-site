@@ -1,8 +1,8 @@
-import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { resolveRelative, pathToRoot, joinSegments } from "../util/path"
-import { classNames } from "../util/lang"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
+import { resolveRelative, pathToRoot, joinSegments } from "../../util/path"
+import { classNames } from "../../util/lang"
 // @ts-ignore
-import style from "./styles/featuredItem.scss"
+import style from "../styles/featuredItem.scss"
 
 function normalizeImage(image: string, fromSlug: string): string | null {
   if (!image) return null

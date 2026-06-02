@@ -4,9 +4,9 @@ import * as Component from "./quartz/components"
 // components shared across all pages
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
-  header: [Component.ShopHeader()],
+  header: [Component.SiteHeader()],
   afterBody: [Component.PageFootnote(), Component.Search()],
-  footer: Component.ShopFooter(),
+  footer: Component.SiteFooter(),
 }
 
 // components for pages that display a single page (e.g. a single note)

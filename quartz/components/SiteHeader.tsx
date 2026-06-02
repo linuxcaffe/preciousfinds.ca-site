@@ -2,31 +2,31 @@ import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } fro
 import { siteConfig } from "../util/siteConfig"
 import { pathToRoot } from "../util/path"
 // @ts-ignore
-import style from "./styles/shopHeader.scss"
+import style from "./styles/siteHeader.scss"
 
 export default (() => {
-  const ShopHeader: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) => {
+  const SiteHeader: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) => {
     const title       = cfg?.configuration?.pageTitle ?? "Precious Finds"
     const logoHref    = pathToRoot(fileData.slug!)
     const pageCaption = fileData.frontmatter?.caption
     const tagline     = pageCaption ? String(pageCaption) : (siteConfig.tagline ?? null)
 
     return (
-      <div class="shop-header-wrap">
-        <div class="shop-header-bar">
-          <div class="shop-header-left" />
-          <div class="shop-header-center">
-            <a href={logoHref} class="shop-header-logo">
+      <div class="site-header-wrap">
+        <div class="site-header-bar">
+          <div class="site-header-left" />
+          <div class="site-header-center">
+            <a href={logoHref} class="site-header-logo">
               {title}
-              <span class="shop-header-tld">.ca</span>
+              <span class="site-header-tld">.ca</span>
             </a>
-            {tagline && <div class="shop-header-tagline">{tagline}</div>}
+            {tagline && <div class="site-header-tagline">{tagline}</div>}
           </div>
-          <div class="shop-header-right">
-            <button class="shop-header-icon-btn" aria-label="Search" data-shop-search="1">
+          <div class="site-header-right">
+            <button class="site-header-icon-btn" aria-label="Search" data-shop-search="1">
               🔍
             </button>
-            <button class="shop-header-icon-btn" aria-label="Toggle dark mode" data-shop-darkmode="1">
+            <button class="site-header-icon-btn" aria-label="Toggle dark mode" data-shop-darkmode="1">
               <span data-darkmode-icon="1">🌙</span>
             </button>
           </div>
@@ -35,10 +35,10 @@ export default (() => {
     )
   }
 
-  ShopHeader.css = style
+  SiteHeader.css = style
 
-  ShopHeader.afterDOMLoaded = `
-    function initShopHeader() {
+  SiteHeader.afterDOMLoaded = `
+    function initSiteHeader() {
       const dmBtn     = document.querySelector('[data-shop-darkmode]')
       const dmIcon    = document.querySelector('[data-darkmode-icon]')
       const searchBtn = document.querySelector('[data-shop-search]')
@@ -67,9 +67,9 @@ export default (() => {
       syncDarkmode()
     }
 
-    document.addEventListener('nav', initShopHeader)
-    initShopHeader()
+    document.addEventListener('nav', initSiteHeader)
+    initSiteHeader()
   `
 
-  return ShopHeader
+  return SiteHeader
 }) satisfies QuartzComponentConstructor

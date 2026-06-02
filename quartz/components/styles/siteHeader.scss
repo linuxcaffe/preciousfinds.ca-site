@@ -1,12 +1,12 @@
 // ── Shop site-wide header ─────────────────────────────────────────────────────
 
-.shop-header-wrap {
+.site-header-wrap {
   width: 100%;
   background: color-mix(in srgb, var(--lightgray) 18%, var(--light));
   border-bottom: 1px solid var(--lightgray);
 }
 
-.shop-header-bar {
+.site-header-bar {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
@@ -14,16 +14,16 @@
   box-sizing: border-box;
 }
 
-.shop-header-left {
+.site-header-left {
   // balances the right-side icons to keep the center truly centered
 }
 
-.shop-header-center {
+.site-header-center {
   text-align: center;
   line-height: 1.25;
 }
 
-.shop-header-logo {
+.site-header-logo {
   font-family: var(--headerFont);
   font-style: italic;
   font-size: 1.75rem;
@@ -38,28 +38,28 @@
   }
 }
 
-.shop-header-tld {
+.site-header-tld {
   font-size: 0.9rem;
   vertical-align: super;
   opacity: 0.7;
   margin-left: 1px;
 }
 
-.shop-header-tagline {
+.site-header-tagline {
   font-style: italic;
   font-size: 0.8rem;
   color: var(--gray);
   margin-top: 0.1rem;
 }
 
-.shop-header-right {
+.site-header-right {
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 0.1rem;
 }
 
-.shop-header-icon-btn {
+.site-header-icon-btn {
   background: none;
   border: none;
   color: var(--gray);

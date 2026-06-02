@@ -1,9 +1,9 @@
-import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { QuartzPluginData } from "../plugins/vfile"
-import { resolveRelative, pathToRoot, joinSegments, FullSlug } from "../util/path"
-import { classNames } from "../util/lang"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
+import { QuartzPluginData } from "../../plugins/vfile"
+import { resolveRelative, pathToRoot, joinSegments, FullSlug } from "../../util/path"
+import { classNames } from "../../util/lang"
 // @ts-ignore
-import style from "./styles/shopHome.scss"
+import style from "../styles/shopHome.scss"
 
 function normalizeImage(image: string, fromSlug: string): string | null {
   if (!image) return null

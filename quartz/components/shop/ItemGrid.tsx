@@ -1,9 +1,9 @@
-import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
-import { QuartzPluginData } from "../plugins/vfile"
-import { resolveRelative, pathToRoot, joinSegments } from "../util/path"
-import { classNames } from "../util/lang"
+import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
+import { QuartzPluginData } from "../../plugins/vfile"
+import { resolveRelative, pathToRoot, joinSegments } from "../../util/path"
+import { classNames } from "../../util/lang"
 // @ts-ignore
-import style from "./styles/itemGrid.scss"
+import style from "../styles/itemGrid.scss"
 
 interface Options {
   tag: string

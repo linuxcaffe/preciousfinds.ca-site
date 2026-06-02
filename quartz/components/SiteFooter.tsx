@@ -1,10 +1,10 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { siteConfig } from "../util/siteConfig"
 // @ts-ignore
-import style from "./styles/shopFooter.scss"
+import style from "./styles/siteFooter.scss"
 
 export default (() => {
-  const ShopFooter: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
+  const SiteFooter: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
     const year      = new Date().getFullYear()
     const copyright = siteConfig.copyright ?? `© ${year} ${cfg?.configuration?.pageTitle ?? ""}`
     const instagram = siteConfig.instagram || null
@@ -12,10 +12,10 @@ export default (() => {
     const etsy      = siteConfig.etsy || null
 
     return (
-      <footer class="shop-footer">
-        <p class="shop-footer-copy">{copyright}</p>
+      <footer class="site-footer">
+        <p class="site-footer-copy">{copyright}</p>
         {(instagram || ebay || etsy) && (
-          <ul class="shop-footer-links">
+          <ul class="site-footer-links">
             {instagram && (
               <li>
                 <a href={`https://instagram.com/${instagram}`} target="_blank" rel="noopener noreferrer">
@@ -43,6 +43,6 @@ export default (() => {
     )
   }
 
-  ShopFooter.css = style
-  return ShopFooter
+  SiteFooter.css = style
+  return SiteFooter
 }) satisfies QuartzComponentConstructor
