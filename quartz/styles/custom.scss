@@ -93,39 +93,6 @@ a {
   }
 }
 
-// ── Site title (left sidebar) ─────────────────────────────────────────────────
-
-.page-title {
-  font-size: 1.25rem;
-  letter-spacing: 0.01em;
-
-  a {
-    color: var(--secondary);
-    font-weight: 700;
-
-    &:hover {
-      color: var(--tertiary);
-      text-decoration: none;
-    }
-  }
-}
-
-// ── Left sidebar — hide Explorer, keep Search + Darkmode ──────────────────────
-
-.explorer {
-  display: none;
-}
-
-// ── Right sidebar — Graph removed in layout.ts; belt+suspenders ───────────────
-
-.graph {
-  display: none;
-}
-
-.backlinks {
-  display: none;
-}
-
 // ── Content meta (read time, date) ────────────────────────────────────────────
 
 .content-meta {
@@ -151,7 +118,7 @@ a {
   }
 }
 
-// ── Search ────────────────────────────────────────────────────────────────────
+// ── Search modal input ────────────────────────────────────────────────────────
 
 #search-bar {
   background: var(--light);
@@ -178,89 +145,42 @@ a {
   }
 }
 
-// ── Global: grid-header spans all columns, shop banner at very top ────────────
+// ── Single-column layout everywhere; ShopHeader owns search + darkmode ─────────
+// Sidebars are hidden; Search is kept in the DOM (hidden) so ShopHeader's
+// search icon can trigger its modal via .querySelector('.search button').click()
 
 body > #quartz-body {
-  // Make the header row span the full width on desktop (all 3 columns)
-  grid-template-areas:
-    "grid-header grid-header grid-header"
-    "grid-sidebar-left grid-center grid-sidebar-right"
-    "grid-sidebar-left grid-footer grid-sidebar-right";
-
-  @media (min-width: 800px) and (max-width: 1200px) {
-    // Tablet: header spans both columns
-    grid-template-areas:
-      "grid-header grid-header"
-      "grid-sidebar-left grid-center"
-      "grid-sidebar-left grid-sidebar-right"
-      "grid-sidebar-left grid-footer";
-  }
-}
-
-// Remove the large top-margin Quartz puts on the page-header —
-// the dark shop banner should sit flush at the top
-.page-header {
-  margin-top: 0 !important;
-}
-
-// ── Homepage — full-width, ShopHome owns the content ─────────────────────────
-
-body[data-slug="index"] > #quartz-body {
-  // Collapse to single-column — no sidebars on the shop homepage
   grid-template-columns: auto;
   grid-template-areas:
     "grid-header"
     "grid-center"
     "grid-footer";
 
-  // Specificity matches base rule (body > #quartz-body .sidebar.*) so display: none wins
   .sidebar.left,
   .sidebar.right {
     display: none;
   }
 }
 
+// ShopHeader sits flush at the top — no leading margin
+.page-header {
+  margin-top: 0 !important;
+}
+
+// ── Homepage ──────────────────────────────────────────────────────────────────
+
 body[data-slug="index"] {
-  // ShopHome renders the page; suppress the Quartz article scaffolding
   .article-title,
   .content-meta {
     display: none;
   }
 }
 
-// ── Category pages — single-column, nav + breadcrumbs in content ─────────────
-
-body[data-slug^="category/"] > #quartz-body {
-  grid-template-columns: auto;
-  grid-template-areas:
-    "grid-header"
-    "grid-center"
-    "grid-footer";
-
-  .sidebar.left,
-  .sidebar.right {
-    display: none;
-  }
-}
+// ── Category pages ────────────────────────────────────────────────────────────
 
 body[data-slug^="category/"] {
   .content-meta,
-  .breadcrumb-container + .article-title { // hide duplicate title (CategoryContent renders its own)
-    display: none;
-  }
-}
-
-// ── Item pages — single-column ────────────────────────────────────────────────
-
-body[data-slug^="items/"] > #quartz-body {
-  grid-template-columns: auto;
-  grid-template-areas:
-    "grid-header"
-    "grid-center"
-    "grid-footer";
-
-  .sidebar.left,
-  .sidebar.right {
+  .breadcrumb-container + .article-title {
     display: none;
   }
 }
@@ -268,13 +188,11 @@ body[data-slug^="items/"] > #quartz-body {
 // ── Shop page ─────────────────────────────────────────────────────────────────
 
 body[data-slug="shop"] {
-  // Platform sections (## eBay, ## Etsy, etc.) — space them out
   .center article h2 {
     margin-top: 2.5rem;
     font-size: 1.5rem;
   }
 
-  // Platform "Browse →" links — button style
   .center article a[href*="ebay"],
   .center article a[href*="etsy"],
   .center article a[href*="facebook"] {

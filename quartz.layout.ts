@@ -19,7 +19,6 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug !== "index",
     }),
     Component.ArticleTitle(),
-    Component.PageCaption(),
     Component.ConditionalRender({
       component: Component.ShopHome(),
       condition: (page) => page.fileData.slug === "index",
@@ -37,42 +36,15 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug === "new-arrivals",
     }),
   ],
-  left: [
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-        { Component: Component.ReaderMode() },
-      ],
-    }),
-    Component.Explorer(),
-  ],
-  right: [
-    Component.DesktopOnly(Component.TableOfContents()),
-    Component.Backlinks(),
-  ],
+  // Search kept here so its modal is in the DOM; sidebar is hidden via CSS.
+  // ShopHeader's search icon triggers it via document.querySelector('.search button').click()
+  left: [Component.Search()],
+  right: [],
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
-  left: [
-    Component.PageTitle(),
-    Component.MobileOnly(Component.Spacer()),
-    Component.Flex({
-      components: [
-        {
-          Component: Component.Search(),
-          grow: true,
-        },
-        { Component: Component.Darkmode() },
-      ],
-    }),
-    Component.Explorer(),
-  ],
+  left: [Component.Search()],
   right: [],
 }
