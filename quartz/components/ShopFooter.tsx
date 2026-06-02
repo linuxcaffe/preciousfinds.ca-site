@@ -6,7 +6,7 @@ import style from "./styles/shopFooter.scss"
 export default (() => {
   const ShopFooter: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
     const year      = new Date().getFullYear()
-    const copyright = siteConfig.copyright ?? `© ${year} ${cfg.configuration.pageTitle}`
+    const copyright = siteConfig.copyright ?? `© ${year} ${cfg?.configuration?.pageTitle ?? ""}`
     const instagram = siteConfig.instagram || null
     const ebay      = siteConfig.ebay || null
     const etsy      = siteConfig.etsy || null
