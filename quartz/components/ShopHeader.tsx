@@ -77,7 +77,7 @@ export default (() => {
       })
 
       window.addEventListener('themechange', syncDarkmode)
-      window.addCleanup(() => window.removeEventListener('themechange', syncDarkmode))
+      window.addCleanup?.(() => window.removeEventListener('themechange', syncDarkmode))
 
       searchBtn?.addEventListener('click', () => {
         closeDrawer()
