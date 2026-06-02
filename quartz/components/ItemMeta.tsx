@@ -15,6 +15,8 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
   const platform    = fm["platform"]    as string | undefined
   const listing     = fm["listing"]     as string | undefined
   const condition   = fm["condition"]   as string | undefined
+  const size        = fm["size"]        as string | undefined
+  const shipping    = fm["shipping"]    as string | undefined
 
   if (!status && !price && !platform && !condition && !description && !category) return null
 
@@ -27,7 +29,9 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
     <div class={classNames(displayClass, "item-meta-wrap")}>
       {category && <span class="item-category">{String(category)}</span>}
       {description && <p class="item-description">{String(description)}</p>}
+      {size      && <p class="item-size">{String(size)}</p>}
       {condition && <p class="item-condition">{String(condition)}</p>}
+      {shipping  && <p class="item-shipping">{String(shipping)}</p>}
       <div class="item-meta">
         {qtty && <span class="item-qtty">×{String(qtty)}</span>}
         {status && (

@@ -117,6 +117,8 @@ export default (() => {
 
                 const description = fm["description"] as string | undefined
                 const condition   = fm["condition"] as string | undefined
+                const size        = fm["size"]      as string | undefined
+                const shipping    = fm["shipping"]  as string | undefined
                 const status      = fm["status"] as string | undefined
                 const platform    = fm["platform"] as string | undefined
                 const listing     = fm["listing"] as string | undefined
@@ -154,7 +156,9 @@ export default (() => {
                     {description && (
                       <a href={href} class="featured-card-description">{description}</a>
                     )}
+                    {size      && <p class="featured-card-size">{size}</p>}
                     {condition && <p class="featured-card-condition">{condition}</p>}
+                    {shipping  && <p class="featured-card-shipping">{shipping}</p>}
                     <div class="featured-card-footer">
                       {qtty && <span class="featured-card-qtty">×{String(qtty)}</span>}
                       {status && (
