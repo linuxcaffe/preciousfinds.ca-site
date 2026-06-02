@@ -156,9 +156,13 @@ export default (() => {
                     {description && (
                       <a href={href} class="featured-card-description">{description}</a>
                     )}
-                    {size      && <p class="featured-card-size">{size}</p>}
-                    {condition && <p class="featured-card-condition">{condition}</p>}
-                    {shipping  && <p class="featured-card-shipping">{shipping}</p>}
+                    {(size || condition || shipping) && (
+                      <div class="featured-card-specs">
+                        {size      && <p class="featured-card-size">{size}</p>}
+                        {condition && <p class="featured-card-condition">{condition}</p>}
+                        {shipping  && <p class="featured-card-shipping">{shipping}</p>}
+                      </div>
+                    )}
                     <div class="featured-card-footer">
                       {qtty && <span class="featured-card-qtty">×{String(qtty)}</span>}
                       {status && (

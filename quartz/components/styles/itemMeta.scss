@@ -23,17 +23,33 @@
   line-height: 1.5;
 }
 
-.item-condition {
+// ── Specs block (size / condition / shipping) ─────────────────────────────────
+
+.item-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  margin: 0.35rem 0 0.6rem;
+  padding: 0.4rem 0.75rem;
+  border-left: 2px solid var(--lightgray);
+}
+
+.item-size,
+.item-condition,
+.item-shipping {
   color: var(--gray);
   font-size: 0.88rem;
-  margin: 0 0 0.4rem;
+  margin: 0;
 
   &::before {
-    content: "Condition: ";
     font-weight: 600;
     opacity: 0.75;
   }
 }
+
+.item-size::before      { content: "Size: "; }
+.item-condition::before { content: "Condition: "; }
+.item-shipping::before  { content: "Shipping: "; }
 
 // ── Bottom line ───────────────────────────────────────────────────────────────
 
