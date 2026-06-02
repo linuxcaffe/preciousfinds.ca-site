@@ -1,20 +1,22 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { siteConfig } from "../util/siteConfig"
+import { pathToRoot } from "../util/path"
 // @ts-ignore
 import style from "./styles/shopHeader.scss"
 
 export default (() => {
   const ShopHeader: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) => {
-    const title      = cfg?.configuration?.pageTitle ?? "Precious Finds"
+    const title       = cfg?.configuration?.pageTitle ?? "Precious Finds"
+    const logoHref    = pathToRoot(fileData.slug!)
     const pageCaption = fileData.frontmatter?.caption
-    const tagline    = pageCaption ? String(pageCaption) : (siteConfig.tagline ?? null)
+    const tagline     = pageCaption ? String(pageCaption) : (siteConfig.tagline ?? null)
 
     return (
       <div class="shop-header-wrap">
         <div class="shop-header-bar">
           <div class="shop-header-left" />
           <div class="shop-header-center">
-            <a href="/" class="shop-header-logo">
+            <a href={logoHref} class="shop-header-logo">
               {title}
               <span class="shop-header-tld">.ca</span>
             </a>

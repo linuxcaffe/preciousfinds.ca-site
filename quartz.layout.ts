@@ -5,7 +5,7 @@ import * as Component from "./quartz/components"
 export const sharedPageComponents: SharedLayout = {
   head: Component.Head(),
   header: [Component.ShopHeader()],
-  afterBody: [Component.PageFootnote()],
+  afterBody: [Component.PageFootnote(), Component.Search()],
   footer: Component.ShopFooter(),
 }
 
@@ -34,15 +34,13 @@ export const defaultContentPageLayout: PageLayout = {
       condition: (page) => page.fileData.slug === "new-arrivals",
     }),
   ],
-  // Search kept here so its modal is in the DOM; sidebar is hidden via CSS.
-  // ShopHeader's search icon triggers it via document.querySelector('.search button').click()
-  left: [Component.Search()],
+  left: [],
   right: [],
 }
 
 // components for pages that display lists of pages  (e.g. tags or folders)
 export const defaultListPageLayout: PageLayout = {
   beforeBody: [Component.Breadcrumbs(), Component.ArticleTitle(), Component.ContentMeta()],
-  left: [Component.Search()],
+  left: [],
   right: [],
 }

@@ -118,7 +118,13 @@ a {
   }
 }
 
-// ── Search modal input ────────────────────────────────────────────────────────
+// ── Search — hidden trigger in afterBody; modal styled below ─────────────────
+
+// The Search component lives in afterBody (invisible) so ShopHeader's icon
+// can trigger its modal via .querySelector('.search button').click()
+.after-body > .search {
+  display: none;
+}
 
 #search-bar {
   background: var(--light);
