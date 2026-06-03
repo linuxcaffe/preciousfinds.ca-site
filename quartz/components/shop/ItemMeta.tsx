@@ -10,7 +10,6 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
   const status      = fm["status"]      as string | undefined
   const price       = fm["price"]       as string | undefined
   const qtty        = fm["qtty"]        as string | undefined
-  const category    = fm["category"]    as string | undefined
   const description = fm["description"] as string | undefined
   const platform    = fm["platform"]    as string | undefined
   const listing     = fm["listing"]     as string | undefined
@@ -18,7 +17,15 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
   const size        = fm["size"]        as string | undefined
   const shipping    = fm["shipping"]    as string | undefined
 
-  if (!status && !price && !platform && !condition && !description && !category) return null
+  const rawDate = fm["date"]
+  const dateObj = rawDate instanceof Date ? rawDate
+    : typeof rawDate === "string" && rawDate ? new Date(rawDate)
+    : (fileData.dates?.modified ?? fileData.dates?.created ?? null)
+  const dateStr = dateObj
+    ? dateObj.toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })
+    : null
+
+  if (!status && !price && !platform && !condition && !description) return null
 
   const statusLabel =
     status === "available" ? "Available"
@@ -27,10 +34,10 @@ const ItemMeta: QuartzComponent = ({ fileData, displayClass }: QuartzComponentPr
 
   return (
     <div class={classNames(displayClass, "item-meta-wrap")}>
-      {category && <span class="item-category">{String(category)}</span>}
       {description && <p class="item-description">{String(description)}</p>}
-      {(size || condition || shipping) && (
+      {(size || condition || shipping || dateStr) && (
         <div class="item-specs">
+          {dateStr   && <p class="item-date">{dateStr}</p>}
           {size      && <p class="item-size">{String(size)}</p>}
           {condition && <p class="item-condition">{String(condition)}</p>}
           {shipping  && <p class="item-shipping">{String(shipping)}</p>}

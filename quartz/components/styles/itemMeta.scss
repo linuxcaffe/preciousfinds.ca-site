@@ -4,18 +4,6 @@
   margin: 0.5rem 0 1.75rem;
 }
 
-.item-category {
-  display: inline-block;
-  color: var(--gray);
-  font-size: 0.8rem;
-  margin-bottom: 0.4rem;
-
-  &::before {
-    content: "# ";
-    opacity: 0.5;
-  }
-}
-
 .item-description {
   color: var(--darkgray);
   font-size: 0.95rem;
@@ -34,6 +22,7 @@
   border-left: 2px solid var(--lightgray);
 }
 
+.item-date,
 .item-size,
 .item-condition,
 .item-shipping {
@@ -47,6 +36,7 @@
   }
 }
 
+.item-date::before      { content: "Listed: "; }
 .item-size::before      { content: "Size: "; }
 .item-condition::before { content: "Condition: "; }
 .item-shipping::before  { content: "Shipping: "; }

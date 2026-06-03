@@ -32,6 +32,7 @@ import SiteFooter from "./SiteFooter"
 
 // ── nb-website: shop extension ────────────────────────────────────────────────
 import ItemMeta from "./shop/ItemMeta"
+import ItemCategory from "./shop/ItemCategory"
 import ItemGrid from "./shop/ItemGrid"
 import FeaturedItem from "./shop/FeaturedItem"
 import ShopHome from "./shop/ShopHome"
@@ -71,6 +72,7 @@ export {
   SiteFooter,
   // nb-website shop extension
   ItemMeta,
+  ItemCategory,
   ItemGrid,
   FeaturedItem,
   ShopHome,

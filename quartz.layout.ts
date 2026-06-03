@@ -23,7 +23,11 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.ItemGallery(),
     Component.ItemMeta(),
-    Component.ContentMeta(),
+    Component.ConditionalRender({
+      component: Component.ContentMeta(),
+      condition: (page) => !page.fileData.slug?.startsWith("items/"),
+    }),
+    Component.ItemCategory(),
     Component.TagList(),
     Component.ConditionalRender({
       component: Component.ItemGrid({ tag: "shop" }),

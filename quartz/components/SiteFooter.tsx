@@ -6,14 +6,19 @@ import style from "./styles/siteFooter.scss"
 export default (() => {
   const SiteFooter: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
     const year      = new Date().getFullYear()
-    const copyright = siteConfig.copyright ?? `© ${year} ${cfg?.configuration?.pageTitle ?? ""}`
-    const instagram = siteConfig.instagram || null
-    const ebay      = siteConfig.ebay || null
-    const etsy      = siteConfig.etsy || null
+    const footer    = siteConfig.footer || null
+    const copyright = !footer ? (siteConfig.copyright ?? `© ${year} ${cfg?.configuration?.pageTitle ?? ""}`) : null
+    const instagram = !footer ? (siteConfig.instagram || null) : null
+    const ebay      = !footer ? (siteConfig.ebay || null) : null
+    const etsy      = !footer ? (siteConfig.etsy || null) : null
 
     return (
       <footer class="site-footer">
-        <p class="site-footer-copy">{copyright}</p>
+        {footer
+          ? <p class="site-footer-copy"
+              dangerouslySetInnerHTML={{ __html: footer.replace(/\n/g, "<br>") }} />
+          : <p class="site-footer-copy">{copyright}</p>
+        }
         {(instagram || ebay || etsy) && (
           <ul class="site-footer-links">
             {instagram && (
