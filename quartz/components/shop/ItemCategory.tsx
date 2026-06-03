@@ -6,7 +6,7 @@ const ItemCategory: QuartzComponent = ({ fileData }: QuartzComponentProps) => {
   const category = fileData.frontmatter?.category as string | undefined
   if (!category) return null
 
-  const href = resolveRelative(fileData.slug!, `tags/${category}` as FullSlug)
+  const href = resolveRelative(fileData.slug!, `category/${category}` as FullSlug)
   return <a class="item-cat-badge" href={href}>{category}</a>
 }
 
