@@ -7,7 +7,7 @@ import { defaultProcessedContent } from "../vfile"
 import { FullPageLayout } from "../../cfg"
 import { FullSlug, joinSegments, pathToRoot } from "../../util/path"
 import { defaultContentPageLayout, sharedPageComponents } from "../../../quartz.layout"
-import { CategoryContent, Breadcrumbs } from "../../components"
+import { CategoryContent, ShopNav } from "../../components"
 import { write } from "./helpers"
 import { BuildCtx } from "../../util/ctx"
 import { StaticResources } from "../../util/resources"
@@ -19,7 +19,7 @@ function capitalize(s: string): string {
 export const CategoryPage: QuartzEmitterPlugin = () => {
   const opts: FullPageLayout = {
     ...sharedPageComponents,
-    beforeBody: [Breadcrumbs()],
+    beforeBody: [ShopNav()],
     pageBody: CategoryContent(),
     afterBody: [],
     left: defaultContentPageLayout.left,
