@@ -26,7 +26,7 @@ export default (() => {
             <button class="site-header-icon-btn" aria-label="Search" data-shop-search="1">
               🔍
             </button>
-            <button class="site-header-icon-btn darkmode" aria-label="Toggle dark mode">
+            <button class="site-header-icon-btn" aria-label="Toggle dark mode" data-shop-darkmode="1">
               <span data-darkmode-icon="1">🌙</span>
             </button>
           </div>
@@ -37,28 +37,50 @@ export default (() => {
 
   SiteHeader.css = style
 
-  // Quartz's darkmode.inline.ts owns the toggle — it wires any .darkmode button automatically.
-  // We only need to sync the icon when the theme changes.
-  SiteHeader.afterDOMLoaded = `
-    function syncDarkmodeIcon() {
-      const icon = document.querySelector('[data-darkmode-icon]')
-      if (!icon) return
-      icon.textContent = document.documentElement.getAttribute('saved-theme') === 'dark' ? '☀️' : '🌙'
-    }
+  // Runs in <head> before paint — sets saved-theme from localStorage to prevent flash.
+  // Needed because we don't include the Darkmode component (which normally does this).
+  SiteHeader.beforeDOMLoaded = `
+    (function() {
+      const pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+      const theme = localStorage.getItem('theme') ?? pref
+      document.documentElement.setAttribute('saved-theme', theme)
+    })()
+  `
 
+  // Fully self-contained toggle — no dependency on Darkmode component or darkmode.inline.ts.
+  SiteHeader.afterDOMLoaded = `
     function initSiteHeader() {
+      const dmBtn     = document.querySelector('[data-shop-darkmode]')
+      const dmIcon    = document.querySelector('[data-darkmode-icon]')
       const searchBtn = document.querySelector('[data-shop-search]')
+
+      function syncIcon() {
+        if (dmIcon) dmIcon.textContent =
+          document.documentElement.getAttribute('saved-theme') === 'dark' ? '☀️' : '🌙'
+      }
+
+      function onDmClick() {
+        const next = document.documentElement.getAttribute('saved-theme') === 'dark' ? 'light' : 'dark'
+        document.documentElement.setAttribute('saved-theme', next)
+        localStorage.setItem('theme', next)
+        document.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }))
+        syncIcon()
+      }
+
+      function onThemeChange() { syncIcon() }
 
       function onSearchClick() {
         document.querySelector('.search button')?.click()
       }
 
-      syncDarkmodeIcon()
-      document.addEventListener('themechange', syncDarkmodeIcon)
+      syncIcon()
+      dmBtn?.addEventListener('click', onDmClick)
+      document.addEventListener('themechange', onThemeChange)
       searchBtn?.addEventListener('click', onSearchClick)
 
       window.addCleanup?.(() => {
-        document.removeEventListener('themechange', syncDarkmodeIcon)
+        dmBtn?.removeEventListener('click', onDmClick)
+        document.removeEventListener('themechange', onThemeChange)
         searchBtn?.removeEventListener('click', onSearchClick)
       })
     }
