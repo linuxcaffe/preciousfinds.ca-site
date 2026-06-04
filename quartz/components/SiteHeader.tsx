@@ -86,7 +86,6 @@ export default (() => {
     }
 
     document.addEventListener('nav', initSiteHeader)
-    initSiteHeader()
   `
 
   return SiteHeader

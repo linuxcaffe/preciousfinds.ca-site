@@ -59,7 +59,7 @@ export default ((opts: Options) => {
             <a href={href} class={`item-card item-card--${status}`}>
               <div class="item-card-img">
                 {imgSrc
-                  ? <img src={imgSrc} alt={title} loading="lazy" />
+                  ? <img src={imgSrc} alt={title} />
                   : <div class="item-card-img-placeholder" />
                 }
               </div>
