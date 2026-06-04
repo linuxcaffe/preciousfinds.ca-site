@@ -14,6 +14,9 @@ function normalizeImage(image: string, fromSlug: string): string | null {
   return joinSegments(pathToRoot(fromSlug as any), rel)
 }
 
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1)
+}
 
 export default (() => {
   const CategoryContent: QuartzComponent = ({ allFiles, fileData }: QuartzComponentProps) => {
