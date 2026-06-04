@@ -44,6 +44,19 @@ export default (() => {
       if (cat && !categories.includes(cat)) categories.push(cat)
     })
 
+    // Tag-feed pages — any non-item page with with_tags: frontmatter
+    const tagFeedPages = allFiles
+      .filter((f) => {
+        if (f.slug?.startsWith("items/")) return false
+        const wt = f.frontmatter?.with_tags
+        return wt != null && (Array.isArray(wt) ? wt.length > 0 : String(wt).trim() !== "")
+      })
+      .sort((a, b) => {
+        const ta = (a.frontmatter?.title as string) ?? a.slug ?? ""
+        const tb = (b.frontmatter?.title as string) ?? b.slug ?? ""
+        return ta.localeCompare(tb)
+      })
+
     // Featured items (active + "featured" tag)
     const featured = active.filter((f) => {
       const tags = (f.frontmatter?.tags as string[]) ?? []
@@ -94,7 +107,9 @@ export default (() => {
       <div class={classNames(displayClass, "shop-home")}>
         {/* ── Category nav ─────────────────────────────────── */}
         <nav class="shop-nav">
-          <a href={resolveRelative(fromSlug, "new-arrivals" as FullSlug)}>New Arrivals</a>
+          {tagFeedPages.map((page) => (
+            <a href={resolveRelative(fromSlug, page.slug!)}>{(page.frontmatter?.title as string) ?? page.slug}</a>
+          ))}
           {categories.map((cat) => (
             <a href={resolveRelative(fromSlug, `category/${cat}` as FullSlug)}>{capitalize(cat)}</a>
           ))}
@@ -187,15 +202,28 @@ export default (() => {
           </section>
         )}
 
-        {/* ── New Arrivals ──────────────────────────────────── */}
-        {byDate.length > 0 && (
-          <section class="shop-section" id="new-arrivals">
-            <h2 class="shop-section-heading">
-              <a href={resolveRelative(fromSlug, "new-arrivals" as FullSlug)}>New Arrivals</a>
-            </h2>
-            <Strip items={byDate} />
-          </section>
-        )}
+        {/* ── Tag-feed sections (New Arrivals, Vintage, etc.) ─ */}
+        {tagFeedPages.map((page) => {
+          const pageTags: string[] = (() => {
+            const raw = page.frontmatter?.with_tags
+            if (!raw) return []
+            return (Array.isArray(raw) ? raw : [raw]).map(String)
+          })()
+          const pageItems = byDate.filter((f) => {
+            const itemTags: string[] = (f.frontmatter?.tags as string[]) ?? []
+            return pageTags.some((t) => itemTags.includes(t))
+          })
+          if (pageItems.length === 0) return null
+          const title = (page.frontmatter?.title as string) ?? page.slug ?? ""
+          return (
+            <section class="shop-section" id={`feed-${page.slug}`}>
+              <h2 class="shop-section-heading">
+                <a href={resolveRelative(fromSlug, page.slug!)}>{title}</a>
+              </h2>
+              <Strip items={pageItems} />
+            </section>
+          )
+        })}
 
         {/* ── Category sections ────────────────────────────── */}
         {categories.map((cat) => {
