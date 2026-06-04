@@ -29,14 +29,7 @@ export const defaultContentPageLayout: PageLayout = {
     }),
     Component.ItemCategory(),
     Component.TagList(),
-    Component.ConditionalRender({
-      component: Component.ItemGrid({ tag: "shop" }),
-      condition: (page) => page.fileData.slug === "shop",
-    }),
-    Component.ConditionalRender({
-      component: Component.ItemGrid({ tag: "new" }),
-      condition: (page) => page.fileData.slug === "new-arrivals",
-    }),
+    Component.TagFeed(),
   ],
   left: [],
   right: [],

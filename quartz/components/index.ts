@@ -34,6 +34,7 @@ import SiteFooter from "./SiteFooter"
 import ItemMeta from "./shop/ItemMeta"
 import ItemCategory from "./shop/ItemCategory"
 import ItemGrid from "./shop/ItemGrid"
+import TagFeed from "./shop/TagFeed"
 import FeaturedItem from "./shop/FeaturedItem"
 import ShopHome from "./shop/ShopHome"
 import ItemGallery from "./shop/ItemGallery"
@@ -74,6 +75,7 @@ export {
   ItemMeta,
   ItemCategory,
   ItemGrid,
+  TagFeed,
   FeaturedItem,
   ShopHome,
   ItemGallery,
