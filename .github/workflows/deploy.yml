@@ -23,12 +23,12 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Quartz config
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Checkout notebook content
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: linuxcaffe/preciousfinds.ca
           ref: preciousfinds.ca
@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 22
 
@@ -47,7 +47,7 @@ jobs:
         run: npx quartz build --directory content
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: public
 
@@ -60,4 +60,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
