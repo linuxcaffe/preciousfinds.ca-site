@@ -5,9 +5,10 @@ const PUBLISH_STATUSES = new Set(["available", "sold"])
 export const ShopStatus: QuartzFilterPlugin<{}> = () => ({
   name: "ShopStatus",
   shouldPublish(_ctx, [_tree, vfile]) {
+    // Only applies to shop items — pages use draft: true (RemoveDrafts) instead
+    if (!vfile.data?.filePath?.includes("/items/")) return true
     const status = vfile.data?.frontmatter?.status
-    // Only intervene when status is explicitly set — regular pages have no status field
-    if (status === undefined || status === null || status === "") return true
+    if (!status) return true
     return PUBLISH_STATUSES.has(String(status).toLowerCase().trim())
   },
 })
