@@ -75,7 +75,7 @@ export default (() => {
         <a href={href} class="strip-card">
           <div class="strip-card-img">
             {imgSrc ? (
-              <img src={imgSrc} alt={title} loading="lazy" />
+              <img src={imgSrc} alt={title} loading="lazy" decoding="async" />
             ) : (
               <div class="strip-card-img-placeholder" />
             )}
@@ -141,7 +141,7 @@ export default (() => {
                     <a href={href} class="featured-card-title">{title}</a>
                     <a href={href} class="featured-card-img-wrap">
                       {imgSrc ? (
-                        <img src={imgSrc} alt={title} loading="eager" />
+                        <img src={imgSrc} alt={title} loading="eager" decoding="async" />
                       ) : (
                         <div class="featured-card-img-placeholder" />
                       )}

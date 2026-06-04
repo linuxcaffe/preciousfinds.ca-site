@@ -8,6 +8,8 @@
 }
 
 .item-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 280px;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--lightgray);

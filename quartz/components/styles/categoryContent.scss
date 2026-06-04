@@ -169,6 +169,8 @@
 }
 
 .cat-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 160px 210px;
   flex: 0 0 160px;
   text-decoration: none !important;
   color: inherit;

@@ -72,7 +72,7 @@ export default (() => {
           <a href={href} class="cat-hero-title">{title}</a>
           <a href={href} class="cat-hero-img-wrap">
             {imgSrc
-              ? <img src={imgSrc} alt={title} loading="eager" />
+              ? <img src={imgSrc} alt={title} loading="eager" decoding="async" />
               : <div class="cat-hero-img-placeholder" />
             }
           </a>
@@ -110,7 +110,7 @@ export default (() => {
         <a href={href} class="cat-card">
           <div class="cat-card-img">
             {imgSrc
-              ? <img src={imgSrc} alt={title} loading="lazy" />
+              ? <img src={imgSrc} alt={title} loading="lazy" decoding="async" />
               : <div class="cat-card-img-placeholder" />
             }
           </div>

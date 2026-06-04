@@ -58,7 +58,7 @@ const TagFeed: QuartzComponent = (props: QuartzComponentProps) => {
           <a href={href} class={`item-card item-card--${status}`}>
             <div class="item-card-img">
               {imgSrc
-                ? <img src={imgSrc} alt={title} />
+                ? <img src={imgSrc} alt={title} decoding="async" />
                 : <div class="item-card-img-placeholder" />
               }
             </div>
