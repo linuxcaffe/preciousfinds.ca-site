@@ -43,6 +43,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Cache optimized images
+        uses: actions/cache@v4
+        id: img-cache
+        with:
+          path: content/images
+          # Key covers only source formats — WebP output files are cached separately.
+          # Cache miss triggers Sharp processing; hit restores WebP variants and skips it.
+          key: images-v1-${{ hashFiles('content/images/**.jpg', 'content/images/**.jpeg', 'content/images/**.png', 'content/images/**.JPG', 'content/images/**.JPEG', 'content/images/**.PNG') }}
+
+      - name: Optimize images
+        if: steps.img-cache.outputs.cache-hit != 'true'
+        run: node scripts/optimize-images.mjs
+
       - name: Build site
         run: npx quartz build --directory content
 
