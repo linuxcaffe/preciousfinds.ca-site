@@ -1,6 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "../types"
 import { QuartzPluginData } from "../../plugins/vfile"
-import { resolveRelative, pathToRoot, joinSegments, FullSlug } from "../../util/path"
+import { resolveRelative, pathToRoot, joinSegments } from "../../util/path"
 // @ts-ignore
 import style from "../styles/categoryContent.scss"
 
@@ -14,9 +14,6 @@ function normalizeImage(image: string, fromSlug: string): string | null {
   return joinSegments(pathToRoot(fromSlug as any), rel)
 }
 
-function capitalize(s: string): string {
-  return s.charAt(0).toUpperCase() + s.slice(1)
-}
 
 export default (() => {
   const CategoryContent: QuartzComponent = ({ allFiles, fileData }: QuartzComponentProps) => {
@@ -36,51 +33,10 @@ export default (() => {
       })
       .sort((a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0))
 
-    // Build nav category list (same dynamic logic as ShopHome)
-    const navCats: string[] = []
-    ;[...allFiles]
-      .sort((a, b) => (b.dates?.created?.getTime() ?? 0) - (a.dates?.created?.getTime() ?? 0))
-      .forEach((f) => {
-        if (!f.slug?.startsWith("items/")) return
-        const st = f.frontmatter?.status as string | undefined
-        if (st && st !== "available") return
-        const c = f.frontmatter?.category as string | undefined
-        if (c && !navCats.includes(c)) navCats.push(c)
-      })
-
-    const tagFeedPages = allFiles
-      .filter((f) => {
-        if (f.slug?.startsWith("items/")) return false
-        const wt = f.frontmatter?.with_tags
-        return wt != null && (Array.isArray(wt) ? wt.length > 0 : String(wt).trim() !== "")
-      })
-      .sort((a, b) => {
-        const ta = (a.frontmatter?.title as string) ?? a.slug ?? ""
-        const tb = (b.frontmatter?.title as string) ?? b.slug ?? ""
-        return ta.localeCompare(tb)
-      })
-
-    function Nav() {
-      return (
-        <nav class="shop-nav">
-          {tagFeedPages.map((page) => (
-            <a href={resolveRelative(fromSlug, page.slug!)}>{(page.frontmatter?.title as string) ?? page.slug}</a>
-          ))}
-          {navCats.map((c) => (
-            <a
-              href={resolveRelative(fromSlug, `category/${c}` as FullSlug)}
-              class={c === cat ? "shop-nav-active" : ""}
-            >{capitalize(c)}</a>
-          ))}
-        </nav>
-      )
-    }
-
     if (items.length === 0) {
       return (
         <div class="category-content">
-          <Nav />
-          <h1 class="category-page-title">{capitalize(cat)}</h1>
+                    <h1 class="category-page-title">{capitalize(cat)}</h1>
           <p class="category-empty">No items in this category yet.</p>
         </div>
       )
@@ -162,8 +118,7 @@ export default (() => {
 
     return (
       <div class="category-content">
-        <Nav />
-        <h1 class="category-page-title">{capitalize(cat)}</h1>
+                <h1 class="category-page-title">{capitalize(cat)}</h1>
         <HeroCard item={hero} />
         {rest.length > 0 && (
           <div class="cat-cards">

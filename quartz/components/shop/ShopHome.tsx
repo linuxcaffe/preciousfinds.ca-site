@@ -105,16 +105,6 @@ export default (() => {
 
     return (
       <div class={classNames(displayClass, "shop-home")}>
-        {/* ── Category nav ─────────────────────────────────── */}
-        <nav class="shop-nav">
-          {tagFeedPages.map((page) => (
-            <a href={resolveRelative(fromSlug, page.slug!)}>{(page.frontmatter?.title as string) ?? page.slug}</a>
-          ))}
-          {categories.map((cat) => (
-            <a href={resolveRelative(fromSlug, `category/${cat}` as FullSlug)}>{capitalize(cat)}</a>
-          ))}
-        </nav>
-
         {/* ── Featured ─────────────────────────────────────── */}
         {featured.length > 0 && (
           <section class="shop-featured">

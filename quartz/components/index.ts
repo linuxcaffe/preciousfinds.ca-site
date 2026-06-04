@@ -39,6 +39,7 @@ import FeaturedItem from "./shop/FeaturedItem"
 import ShopHome from "./shop/ShopHome"
 import ItemGallery from "./shop/ItemGallery"
 import CategoryContent from "./shop/CategoryContent"
+import ShopNav from "./shop/ShopNav"
 
 export {
   ArticleTitle,
@@ -80,4 +81,5 @@ export {
   ShopHome,
   ItemGallery,
   CategoryContent,
+  ShopNav,
 }
