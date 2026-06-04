@@ -77,11 +77,11 @@ Supported in `footnote:` (per-page) and `footer:` (`_meta.md`):
 |--------|--------|
 | `[text](url)` | Standard link |
 | `[[Page Title]]` | Wikilink — resolved to slug (`New Arrivals` → `new-arrivals`) |
-| `[Home](/)` | Link to the home page (use this instead of `[[Site Title]]`) |
+| `[Home](index)` | Link to the home page |
 | `**bold**`, `*italic*` | Inline emphasis |
 
 > **Note:** `[[Wikilinks]]` resolve by slugifying the title (lowercase, spaces→hyphens).
-> For the home page, use `[text](/)` — there is no slug to match against.
+> For the home page, use `[text](index)` — the home page slug is `index`.
 
 ### Sitewide config (`_meta.md`)
 

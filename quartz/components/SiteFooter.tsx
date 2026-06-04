@@ -1,22 +1,26 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { siteConfig } from "../util/siteConfig"
+import { pathToRoot, joinSegments, FullSlug } from "../util/path"
 // @ts-ignore
 import style from "./styles/siteFooter.scss"
 
-function parseFooter(text: string): (string | JSX.Element)[] {
+function parseFooter(text: string, root: string): (string | JSX.Element)[] {
   const parts: (string | JSX.Element)[] = []
   const re = /\*\*(.+?)\*\*|\*(.+?)\*|\[([^\]]+)\]\(([^)]+)\)|\[\[([^\]]+)\]\]/g
   let last = 0
   let m: RegExpExecArray | null
+  const isExternal = (url: string) => /^https?:\/\//.test(url)
   while ((m = re.exec(text)) !== null) {
     if (m.index > last) parts.push(text.slice(last, m.index))
     if (m[1] !== undefined)      parts.push(<strong>{m[1]}</strong>)
     else if (m[2] !== undefined) parts.push(<em>{m[2]}</em>)
-    else if (m[4] !== undefined) parts.push(<a href={m[4]}>{m[3]}</a>)
-    else {
+    else if (m[4] !== undefined) {
+      const href = isExternal(m[4]) ? m[4] : joinSegments(root, m[4])
+      parts.push(<a href={href}>{m[3]}</a>)
+    } else {
       const title = m[5]
       const slug = title.toLowerCase().replace(/\s+/g, "-")
-      parts.push(<a href={slug}>{title}</a>)
+      parts.push(<a href={joinSegments(root, slug)}>{title}</a>)
     }
     last = re.lastIndex
   }
@@ -25,7 +29,8 @@ function parseFooter(text: string): (string | JSX.Element)[] {
 }
 
 export default (() => {
-  const SiteFooter: QuartzComponent = ({ cfg }: QuartzComponentProps) => {
+  const SiteFooter: QuartzComponent = ({ cfg, fileData }: QuartzComponentProps) => {
+    const root = pathToRoot(fileData.slug! as FullSlug)
     const year      = new Date().getFullYear()
     const footer    = siteConfig.footer || null
     const copyright = !footer ? (siteConfig.copyright ?? `© ${year} ${cfg?.configuration?.pageTitle ?? ""}`) : null
@@ -38,7 +43,7 @@ export default (() => {
         {footer
           ? <p class="site-footer-copy">
               {footer.split("\n").flatMap((line, i) =>
-                i === 0 ? parseFooter(line) : [<br />, ...parseFooter(line)]
+                i === 0 ? parseFooter(line, root) : [<br />, ...parseFooter(line, root)]
               )}
             </p>
           : <p class="site-footer-copy">{copyright}</p>
