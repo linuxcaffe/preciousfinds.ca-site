@@ -26,7 +26,7 @@ export default (() => {
             <button class="site-header-icon-btn" aria-label="Search" data-shop-search="1">
               🔍
             </button>
-            <button class="site-header-icon-btn" aria-label="Toggle dark mode" data-shop-darkmode="1">
+            <button class="site-header-icon-btn darkmode" aria-label="Toggle dark mode">
               <span data-darkmode-icon="1">🌙</span>
             </button>
           </div>
@@ -37,41 +37,30 @@ export default (() => {
 
   SiteHeader.css = style
 
+  // Quartz's darkmode.inline.ts owns the toggle — it wires any .darkmode button automatically.
+  // We only need to sync the icon when the theme changes.
   SiteHeader.afterDOMLoaded = `
+    function syncDarkmodeIcon() {
+      const icon = document.querySelector('[data-darkmode-icon]')
+      if (!icon) return
+      icon.textContent = document.documentElement.getAttribute('saved-theme') === 'dark' ? '☀️' : '🌙'
+    }
+
     function initSiteHeader() {
-      const dmBtn     = document.querySelector('[data-shop-darkmode]')
-      const dmIcon    = document.querySelector('[data-darkmode-icon]')
       const searchBtn = document.querySelector('[data-shop-search]')
-
-      function syncDarkmode() {
-        const dark = document.documentElement.getAttribute('saved-theme') === 'dark'
-        if (dmIcon) dmIcon.textContent = dark ? '☀️' : '🌙'
-      }
-
-      function onDmClick() {
-        const cur  = document.documentElement.getAttribute('saved-theme') ?? 'light'
-        const next = cur === 'dark' ? 'light' : 'dark'
-        document.documentElement.setAttribute('saved-theme', next)
-        localStorage.setItem('theme', next)
-        window.dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }))
-        syncDarkmode()
-      }
 
       function onSearchClick() {
         document.querySelector('.search button')?.click()
       }
 
-      dmBtn?.addEventListener('click', onDmClick)
-      window.addEventListener('themechange', syncDarkmode)
+      syncDarkmodeIcon()
+      document.addEventListener('themechange', syncDarkmodeIcon)
       searchBtn?.addEventListener('click', onSearchClick)
 
       window.addCleanup?.(() => {
-        dmBtn?.removeEventListener('click', onDmClick)
-        window.removeEventListener('themechange', syncDarkmode)
+        document.removeEventListener('themechange', syncDarkmodeIcon)
         searchBtn?.removeEventListener('click', onSearchClick)
       })
-
-      syncDarkmode()
     }
 
     document.addEventListener('nav', initSiteHeader)
