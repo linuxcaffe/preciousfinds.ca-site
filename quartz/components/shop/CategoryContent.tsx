@@ -48,10 +48,24 @@ export default (() => {
         if (c && !navCats.includes(c)) navCats.push(c)
       })
 
+    const tagFeedPages = allFiles
+      .filter((f) => {
+        if (f.slug?.startsWith("items/")) return false
+        const wt = f.frontmatter?.with_tags
+        return wt != null && (Array.isArray(wt) ? wt.length > 0 : String(wt).trim() !== "")
+      })
+      .sort((a, b) => {
+        const ta = (a.frontmatter?.title as string) ?? a.slug ?? ""
+        const tb = (b.frontmatter?.title as string) ?? b.slug ?? ""
+        return ta.localeCompare(tb)
+      })
+
     function Nav() {
       return (
         <nav class="shop-nav">
-          <a href={resolveRelative(fromSlug, "new-arrivals" as FullSlug)}>New Arrivals</a>
+          {tagFeedPages.map((page) => (
+            <a href={resolveRelative(fromSlug, page.slug!)}>{(page.frontmatter?.title as string) ?? page.slug}</a>
+          ))}
           {navCats.map((c) => (
             <a
               href={resolveRelative(fromSlug, `category/${c}` as FullSlug)}
