@@ -1,5 +1,6 @@
 import { QuartzComponent, QuartzComponentConstructor, QuartzComponentProps } from "./types"
 import { siteConfig } from "../util/siteConfig"
+import { parseInline } from "./PageFootnote"
 // @ts-ignore
 import style from "./styles/siteFooter.scss"
 
@@ -15,8 +16,11 @@ export default (() => {
     return (
       <footer class="site-footer">
         {footer
-          ? <p class="site-footer-copy"
-              dangerouslySetInnerHTML={{ __html: footer.replace(/\n/g, "<br>") }} />
+          ? <p class="site-footer-copy">
+              {footer.split("\n").map((line, i) => (
+                <>{i > 0 && <br />}{parseInline(line)}</>
+              ))}
+            </p>
           : <p class="site-footer-copy">{copyright}</p>
         }
         {(instagram || ebay || etsy) && (
