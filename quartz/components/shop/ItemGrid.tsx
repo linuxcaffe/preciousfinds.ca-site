@@ -19,6 +19,8 @@ export default ((opts: Options) => {
     let items: QuartzPluginData[] = allFiles
       .filter((f) => {
         if (!f.slug?.startsWith("items/")) return false
+        const status = (f.frontmatter?.status as string) ?? "available"
+        if (status !== "available") return false
         const tags: string[] = (f.frontmatter?.tags as string[]) ?? []
         return tags.includes(tag)
       })

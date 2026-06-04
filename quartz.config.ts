@@ -74,7 +74,7 @@ const config: QuartzConfig = {
       Plugin.Description(),
       Plugin.Latex({ renderEngine: "katex" }),
     ],
-    filters: [Plugin.RemoveDrafts(), Plugin.UnderscoreFiles()],
+    filters: [Plugin.RemoveDrafts(), Plugin.UnderscoreFiles(), Plugin.ShopStatus()],
     emitters: [
       Plugin.AliasRedirects(),
       Plugin.ComponentResources(),
